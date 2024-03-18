@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="x-ua-compatible" CONTENT="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!--react 底层核心库-->
+    <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
+    <!--react操作DOM的核心库,类似于jquery-->
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+    <!--ES6语法库-->
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+</head>
+
+<body>
+<div id="root1"></div>
+<script type="text/babel"> // 声明使用ES6语法
+function tick(){
+    let time=new Date().toLocaleTimeString()
+    var template = <div>
+        <h1>hello world</h1>
+        <p>现在是：{time}</p>
+    </div>
+    ReactDOM.render(template,document.getElementById('root1'))
+}
+// 定时器
+setInterval(tick,1000)
+</script>
+
+</body>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="x-ua-compatible" CONTENT="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!--react 底层核心库-->
+    <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
+    <!--react操作DOM的核心库,类似于jquery-->
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+    <!--ES6语法库-->
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+</head>
+<body>
+
+<div id="root1"></div>
+<script type="text/babel"> // 声明使用ES6语法
+/* JSX语法
+JSX是JS语法的扩展，JSX可以嵌套表达式。在编译之后，JSX表达式会被转换为普通的JS函数调用，并且对其取值后得到对应JS对象。
+JSX特定属性：可以使用引号将属性值指定为字符串字面量，也可以使用大括号在属性中插入表达式
+
+ */
+let name = '变量'
+let flag= true
+let id = 'hello'
+let div = <div className="hello"><h1>hello react</h1>
+    <h1 id={id}>hello {name}</h1>
+    <p>{name}</p>
+    <p>{flag ? 'hello' : 'world'}</p>
+</div>
+ReactDOM.render(div,document.getElementById('root1'))
+// ReactDOm在渲染所有内容之前，默认会进行转义，可以确保我们的应用永远不会被注入非自己编写的代码
+// 所有的内容在渲染前都被渲染成字符串，这样有效防止XSS(cross-site-scripting)跨站脚本攻击
+</script>
+
+</body>
+</html>
