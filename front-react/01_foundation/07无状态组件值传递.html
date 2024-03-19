@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="x-ua-compatible" CONTENT="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!--react 底层核心库-->
+    <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
+    <!--react操作DOM的核心库,类似于jquery-->
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+    <!--ES6语法库-->
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+</head>
+
+<body>
+<div id="root"></div>
+<script type="text/babel">
+    // 无状态组件
+    function Hello() {
+        return <h1>hello world</h1>
+    }
+
+    function Hello2() {
+        return <div>
+            <h1>hello world</h1>
+            <p>front world</p>
+            <p>back world</p>
+        </div>
+    }
+
+    function Hello_val(obj) {
+        return <div>
+            <h1>hello world {obj.name}</h1>
+            <p>back world {obj.age}</p>
+            <p>front world {obj.address}</p>
+        </div>
+    }
+
+    // ReactDOM.render(<Hello/>,document.getElementById('root'))
+    ReactDOM.render(<Hello_val name='abc' address='local' age='18'/>, document.getElementById('root'))
+
+</script>
+
+</body>
+</html>
