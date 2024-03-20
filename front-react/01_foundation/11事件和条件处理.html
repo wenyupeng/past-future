@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="x-ua-compatible" CONTENT="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!--react 底层核心库-->
+    <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
+    <!--    <script src="https://unpkg.com/react@17/umd/react.development.js"/> 这个写法会导致js加载失败页面无内容-->
+    <!--react操作DOM的核心库,类似于jquery-->
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+    <!--ES6语法库-->
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+</head>
+
+<body>
+<div id="root"></div>
+<script type="text/babel">
+    function Login(props) {
+        return <button onClick={props.update}>login</button>
+    }
+
+    function Logout(props) {
+        return <button onClick={props.update}>logout</button>
+    }
+
+    function changeFlag() {
+        console.log('changeFlag: ', this)
+        this.isLogin = {isLogin: !this.isLogin}
+    }
+
+    class APP extends React.Component {
+        state = {
+            isLogin: false
+        }
+
+        updateState = () => {
+            this.setState({isLogin: !this.state.isLogin})
+        }
+
+        render() {
+            // const isLogin = this.state.isLogin
+            const {isLogin} = this.state
+            return <div>
+                <h1>demo test</h1>
+                {/*this.state.isLogin ? <Login/> : <Logout/>*/}
+                {isLogin ? <Login update ={this.updateState}/> : <Logout update ={this.updateState}/>}
+                <button onClick={this.updateState}>change state</button>
+            </div>
+        }
+    }
+
+    ReactDOM.render(
+        <APP/>,
+        document.getElementById('root')
+    )
+
+</script>
+
+</body>
+</html>

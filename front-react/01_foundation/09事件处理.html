@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="x-ua-compatible" CONTENT="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!--react 底层核心库-->
+    <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
+    <!--    <script src="https://unpkg.com/react@17/umd/react.development.js"/> 这个写法会导致js加载失败页面无内容-->
+    <!--react操作DOM的核心库,类似于jquery-->
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+    <!--ES6语法库-->
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+</head>
+
+<body>
+<div id="root"></div>
+<script type="text/babel">
+    class Hello extends React.Component {
+        constructor() {
+            super();
+            this.state = {
+                name: 'state',
+                age: 15,
+                address: 'remote',
+                flag: true
+            }
+            // this.updateAge = this.updateAge.bind(this)
+            this.updateFlag = this.updateFlag.bind(this)
+            this.handleClick = this.handleClick.bind(this)
+        }
+
+        updateAge() {
+            console.log('updateAge: '+this)
+            this.setState({age: this.state.age + 1})
+        }
+
+        updateFlag() {
+            console.log('updateAge: '+this)
+            this.setState({flag: !this.state.flag})
+        }
+
+        handleClick(e) {
+            e.preventDefault()
+            console.log('hello')
+        }
+
+        // render是生命周期里面非常基础和底层的方法，一定要用它来进行渲染
+        render() {
+            return <div><h1>Hello world</h1>
+                <p>state姓名：{this.state.name}</p>
+                <p>state年龄：{this.state.age}</p>
+                <p>state地址：{this.state.address}</p>
+                <p>state flag：{this.state.flag ? '1' : '0'}</p>
+                <p>姓名：{this.props.name}</p>
+                <p>年龄：{this.props.age}</p>
+                <p>地址：{this.props.address}</p>
+                <button onClick={this.updateAge}>click to change</button>
+                <button onClick={this.updateFlag}>exchange {this.state.flag ? 'YES' : 'NO'}</button>
+                <a href="#" onClick={this.handleClick}>click</a>
+            </div>
+        }
+    }
+
+    ReactDOM.render(<Hello name='abc' address='local' age='18'/>, document.getElementById('root'))
+
+</script>
+
+</body>
+</html>
