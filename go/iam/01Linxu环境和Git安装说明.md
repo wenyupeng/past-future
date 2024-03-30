@@ -32,7 +32,7 @@ cd $WORKSPACE # 登录系统，默认进入 workspace 目录
 - mkdir -p $HOME/workspace # 创建 workspace目录
 # 依赖安装和配置
 # 安装依赖
-- make autoconf automake cmake perl-CPAN libcurl-devel libtool gcc gcc-c++ glibc-headers zlib-devel git-lfs telnet ctags lrzsz jq expat-devel openssl-devel
+- sudo yum -y install make autoconf automake cmake perl-CPAN libcurl-devel libtool gcc gcc-c++ glibc-headers zlib-devel git-lfs telnet ctags lrzsz jq expat-devel openssl-devel
 
 # 安装 Git
 - cd /tmp
