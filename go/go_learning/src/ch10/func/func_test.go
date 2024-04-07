@@ -46,3 +46,37 @@ func TestFun(t *testing.T) {
 	t.Log(tsSF(10))
 
 }
+
+func Sum(ops ...int) int {
+	ret := 0
+	for _, op := range ops {
+		ret += op
+	}
+	return ret
+}
+
+func TestVarParam(t *testing.T) {
+	t.Log(Sum(1, 2, 3, 4))
+	t.Log(Sum(1, 2, 3, 4, 5))
+}
+
+func TestDefer(t *testing.T) {
+	defer func() {
+		t.Log("clear resources")
+	}()
+	t.Log("Started")
+	panic("Fatal error") //抛出程序异常，defer仍会执行
+}
+
+func Clear() {
+	fmt.Println("execute defer")
+	fmt.Println("clear resources.")
+}
+
+func TestDefer2(t *testing.T) {
+	t.Log("before defer")
+	defer Clear()
+	t.Log("after defer")
+	panic("throw err")
+	t.Log("after panic")
+}

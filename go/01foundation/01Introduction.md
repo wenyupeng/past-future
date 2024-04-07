@@ -257,3 +257,34 @@ Unicode UTF8
 4. 函数可以作为参数和返回值
 
 学习函数式编程: <计算机程序的构造和解释>
+
+可变参数
+func sum(ops ...int) int{
+s :=0
+for _,op := range ops{
+s+=op}
+return s 
+}
+
+defer函数
+defer func() {
+t.Log("clear resources")
+}()
+t.Log("Started")
+panic("Fatal error") //defer仍会执行
+
+结构体定义
+type Employee struct {
+Id string
+Name string
+Age int
+}
+
+实例创建及初始化
+e :=Employee{"0","Bob",20}
+e1 :=Employee{Name:"Mike",Age:30}
+e2 := new(Employee) //注意这里返回的引用/指针,相当于 e :=&Employee{}
+e2.Id ="2" //与其他主要编程语言的差异: 通过实例的指针访问成员不需要使用
+e2.Age =22
+e2.Name ="Rose"
+
