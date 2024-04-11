@@ -36,7 +36,8 @@ func TestCreateEmployeeObj(t *testing.T) {
 	t.Log(e1.Id)
 	t.Log(e2)
 	t.Logf("e is %T", e)
-	t.Logf("e is %T", &e)
+	t.Logf("e1 is %T", e1)
+	t.Logf("&e is %T", &e)
 	t.Logf("e2 is %T", e2)
 }
 
