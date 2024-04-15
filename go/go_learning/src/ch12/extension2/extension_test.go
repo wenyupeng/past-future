@@ -22,6 +22,8 @@ type Dog struct {
 }
 
 func TestDog(t *testing.T) {
+	//var dog *Dog = new(Dog)
+	//var p = (*Pet)(Dog)
 	dog := new(Dog)
 	dog.SpeakTo("hello")
 }

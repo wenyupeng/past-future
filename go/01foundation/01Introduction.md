@@ -325,3 +325,80 @@ Go 接口
 自定义类型
 1. type IntConvertionFn func(n int) int
 2. type MyPoint int
+
+type Code string
+type Programmer interface {
+writeHelloWorld() Code
+}
+
+type GoProgrammer struct {
+}
+
+func (p *GoProgrammer) writeHelloWorld() Code {
+return "fmt.Println(\"Hello World!\")"
+}
+
+type JavaProgrammer struct {
+}
+
+func (p *JavaProgrammer) writeHelloWorld() Code {
+return "System.out.Println(\"Hello World!\")"
+}
+
+func writeFirstProgram(p Programmer) {
+fmt.Printf("%T %v\n", p, p.writeHelloWorld())
+}
+
+func TestPolymorphism(t *testing.T) {
+goProg := new(GoProgrammer) // new(GoProgrammer) &GoProgrammer{} 产生指针 GoProgrammer{}产生实例
+javaProg := new(GoProgrammer)
+writeFirstProgram(goProg)
+writeFirstProgram(javaProg)
+}
+
+空接口与断言
+1. 空接口可以表示任何类型
+2. 通过断言来将空接口转换为定制类型 v,ok :=p.(int) // ok =true 时转换成功
+
+Go接口最佳实践
+倾向于使用小的接口定义，很多接口只包含一个方法
+````
+type Reader interface{
+ Read(p []byte)(n int,err,error)
+}
+type Writer interface{
+  Write(p []byte)(n int,err,error)
+}
+````
+较大的接口定义，可以由多个小接口定义组合而成
+````
+type ReadWriter interface{
+ Reader
+ Writer
+}
+````
+只依赖于必要功能的最小接口
+````
+func StoreData(reader Reader)error{
+...
+}
+````
+
+Go的错误机制
+1. 没有异常机制
+2. error类型实现了error接口
+````
+type error interface {
+Error() string
+}
+````
+3. 可以通过errors.New来快速创建错误实例 errors.New("n must be in the range [0,10]")
+
+
+panic
+- panic 用于不可以恢复的错误
+- panic退出前会执行defer指定的内容
+
+os.Exit
+- os.Exit 退出时不会调用defer指定的函数
+- os.Exit 退出时不输出当前调用栈信息
