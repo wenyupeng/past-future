@@ -402,3 +402,27 @@ panic
 os.Exit
 - os.Exit 退出时不会调用defer指定的函数
 - os.Exit 退出时不输出当前调用栈信息
+
+package 
+1. 基本复用模块单元：以首字母大写来表明可被包外代码访问
+2. 代码的 package 可以和所在的目录不一致
+3. 同一目录理的Go代码的 package 要保持一致
+
+GO111MODULE
+- 默认模式（未设置该环境变量或 GO111MODULE=auto）：Go 命令行工具在同时满足以下两个条件时使用 Go Modules：
+当前目录不在 GOPATH/src/ 下；
+在当前目录或上层目录中存在 go.mod 文件。
+- GOPATH 模式（GO111MODULE=off）：Go 命令行工具从不使用 Go Modules。相反，它查找 vendor 目录和 GOPATH 以查找依赖项。
+- Go Modules 模式（GO111MODULE=on）：Go 命令行工具只使用 Go Modules，从不咨询 GOPATH。GOPATH 不再作为导入目录，但它仍然存储下载的依赖项（GOPATH/pkg/mod/）和已安装的命令（GOPATH/bin/），只移除了 GOPATH/src/。
+
+init方法
+- 在main被执行前，所有依赖的package的init方法都会被执行
+- 不同包的init函数按照包导入的依赖关系决定执行顺序
+- 每个包可以有多个init函数
+- 包的每个源文件也可以有多个init函数
+
+package
+1. 通过 go get 来获取远程依赖
+   a. go get -u 强制从网络更新远程依赖
+2. 注意代码在GitHub上的组织形式，以适应 go get
+   a. 直接以代码路径开始，不要有src
