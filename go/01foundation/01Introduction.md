@@ -426,3 +426,31 @@ package
    a. go get -u 强制从网络更新远程依赖
 2. 注意代码在GitHub上的组织形式，以适应 go get
    a. 直接以代码路径开始，不要有src
+
+GO未解决的问题
+1. 同一环境下，不同项目使用同一包的不同版本
+2. 无法管理对包的特定版本的依赖
+
+vendor路径
+随着Go 1.5 release版本的发布，vendor目录被添加到除了 GOPATH 和 GOROOT 之外的依赖目录查找的解决方案。在 Go 1.6 之前，你需要手动设置环境变量
+查找依赖包路径的解决方案：
+1. 当前包下的vendor目录
+2. 向上级目录查找，直到找到 src下的 vendor目录
+3. 在 GOPATH 下面查找依赖包
+4. 在 GOROOT 目录下查找
+
+常用的依赖管理工具
+godep https://github.com/tools/godep
+glide https://github.com/Masterminds/glide
+dep https:// github.com/golang/dep
+
+Thread vs Groutine
+1. 创建时默认的stack的大小
+   1. JDK5后默认 java Thread stack 大小为1M
+   2. Groutine的 Stack初始化大小为 2k
+2. 和KSE (Kernel Space Entity) 的对应关系
+   1. Java Thread 是 1:1
+   2. Groutine 是 M:N
+
+
+ 
