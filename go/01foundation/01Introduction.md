@@ -452,5 +452,16 @@ Thread vs Groutine
    1. Java Thread 是 1:1
    2. Groutine 是 M:N
 
-
+WaitGroup
+var wg sync.WaitGroup
+for i:=0; i<5000; i++{
+wg.Add(1)
+go func(){
+defer func(){
+wg.Done()
+}()
+...
+}()
+}
+wg.Wait() 
  
