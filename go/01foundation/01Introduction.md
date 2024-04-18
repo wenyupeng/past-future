@@ -465,3 +465,7 @@ wg.Done()
 }
 wg.Wait() 
  
+CSP vs.Actor
+- 和Actor的直接通讯不同，CSP模式是通过 Channel 进行通信
+- Go中 channel 是有容量限制并且独立于处理 Groutine ，而如Erlang, Actor模式中的mailbox容量是无限的，接收进程也总是被动处理消息
+
