@@ -1,4 +1,4 @@
-package csp
+package _select
 
 import (
 	"fmt"
@@ -7,7 +7,7 @@ import (
 )
 
 func service() string {
-	time.Sleep(time.Millisecond * 50)
+	time.Sleep(time.Millisecond * 500)
 	return "Done"
 }
 
@@ -42,6 +42,10 @@ func TestAsyncService(t *testing.T) {
 }
 
 func TestSelect(t *testing.T) {
-	ret := <-AsyncService()
-	t.Log(ret)
+	select {
+	case ret := <-AsyncService():
+		t.Logf("=== %s", ret)
+	case <-time.After(time.Millisecond * 100):
+		t.Error("time out")
+	}
 }

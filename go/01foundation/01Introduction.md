@@ -469,3 +469,34 @@ CSP vs.Actor
 - 和Actor的直接通讯不同，CSP模式是通过 Channel 进行通信
 - Go中 channel 是有容量限制并且独立于处理 Groutine ，而如Erlang, Actor模式中的mailbox容量是无限的，接收进程也总是被动处理消息
 
+多渠道选择
+select {
+case ret := <- retCh1:
+    t.Logf("result %s",ret)
+case ret := <- retCh2:
+    t.Logf("result %s",ret)
+default:
+    t.Error("No one returned")
+}
+
+超时控制
+select{
+case ret := <-retCh:
+    t.Logf("result %s",ret)
+case <- time.After(time.Second *1):
+    t.Error("time out")
+}
+
+channel 的关闭
+- 向关闭的 channel 发送数据，会导致 panic
+- v,ok <- ch; ok 为 bool 值， true 表示正常接受，false 表示通道关闭；
+- 所有的 channel 接受者都会在 channel 关闭时，立刻从阻塞等待中返回且上述 ok 值为 false。这个广播机制常被利用，进行向多个订阅者发送信号。如退出信号。
+
+Context
+- 根 Context：通过 context.Background() 创建
+- 子 Context: context.WithCancel(parentContext)创建
+  - ctx,cancel := context.WithCancel(context.BackGround())
+- 当前 Context 被取消时，基于他的子 context 都会被取消
+- 接收取消通知 <- ctx.Done()
+
+
