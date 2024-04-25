@@ -517,3 +517,48 @@ sync.Pool
 - 适合通过复用，降低复杂对象的创建和GC代价
 - 协程安全，会有锁开销
 - 生命周期受GC影响，不适合于做连接池等，需自己管理生命周期的资源的池化
+
+内置单元测试框架
+- Fail, Error: 该测试失败，该测试继续，其他测试继续执行
+- FailNow, Fatal: 该测试失败，该测试中止，其他测试继续执行
+- 代码覆盖率 go test -v -cover
+- 断言 https:// github.com/stretchr/testify
+
+func BenchmarkConcatStringByAdd(b *testing.B) {
+// 与性能测试无关的代码
+b.ResetTimer()
+for i := 0; i < b.N; i++ {
+// 测试代码
+}
+b.StopTimer()
+//与性能测试无关的代码
+}
+
+go test -bench =.-benchmen
+`-bench = <相关benchmark测试>`
+Windows下使用go test命令行时，-bench=. 应写为-bench="."
+
+BDD: Behavior driven development
+Story Card: story的验收标准
+- Given When Then
+
+BDD in Go
+项目网站 https://github.com/smartystreets/goconvey
+安装
+go get -u github.com/smartystreets/goconvey/convey
+启动WEB UI
+$GOPATH/bin/goconvey
+
+reflect.TypeOf vs. reflect.ValueOf
+- reflect.TypeOf 返回类型(reflect.Type)
+- reflect.ValueOf 返回值类型(reflect.Value)
+- 可以从reflect.Value获取类型
+- 通过kind来判断类型
+按名字访问结构的成员
+  reflect.ValueOf(*e).FieldByName("Name")
+按名字访问结构的方法
+  reflect.ValueOf(e).MethodByName("UpdateAge").Call([]reflect.Value{reflect.ValueOf(1)})
+
+Go程序设计语言 The Go Programming language
+面向模式的软件架构（模式系统） pattern-Oriented software Architecture
+计算机程序的构造和解析 Structure and Interpretation of Computer Programs
