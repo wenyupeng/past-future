@@ -46,7 +46,7 @@ image..png
 运行以下命令安装Docker。
 
 
-sudo dnf install -y docker-ce --nobest
+sudo dnf install -y docker-ce --no best
 执行以下命令，检查Docker是否安装成功。
 
 

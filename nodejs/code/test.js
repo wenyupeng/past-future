@@ -1,8 +1,20 @@
-var MongoClient = require('mongodb').MongoClient;
-var url = "mongodb://localhost:27017/runoob";
-
-MongoClient.connect(url, {connectTimeoutMS: 5000}, function(err,db) {
-  if (err) throw err
-
-  console.log("数据库已创建!");db.close();
-});
+const { MongoClient } = require("mongodb");
+// Replace the uri string with your connection string.
+const uri = "mongodb://admin:adminpwd@120.25.188.31:27017/?authSource=admin";
+const client = new MongoClient(uri);
+async function run() {
+  try {
+    const database = client.db('MoreSecond');
+    // console.log(database)
+    const User = database.collection('User');
+    // console.log(User)
+    // Query for a movie that has the title 'Back to the Future'
+    const query = {};
+    const users = await User.findOne(query);
+    console.log(users);
+  } finally {
+    // Ensures that the client will close when you finish/error
+    await client.close();
+  }
+}
+run().catch(console.dir);
