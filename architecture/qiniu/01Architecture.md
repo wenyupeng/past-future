@@ -20,3 +20,11 @@
 > Ability to execute programs on external storage(在外置存储上执行程序的能力)
 ---
 ![simple architecture.png](img/simple architecture.png)
+---
+BIOS -> boot area boot program -> OS boot program -> software
+
+---
+CPU real mode and protected mode(CPU的实模式和保护模式)
+real mode: CPU directly accesses memory through physical address
+protected mode: The CPU converts virtual memory addresses into physical memory addresses through an address mapping table.(CPU通过一个地址映射表把虚拟的内存地址转为物理的内存地址)
+
