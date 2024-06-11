@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html LANG="en">
+<head>
+    <meta charset="UTF-8">
+    <title>4_展开运算符</title>
+</head>
+<body>
+
+<script type="text/javascript">
+    let arr1=[1,3,5,7,9]
+    let arr2=[2,4,6,8,10]
+    console.log(...arr1) // 展开一个数组
+    let arr3 =[...arr1,...arr2] // 连接数组
+    console.log(arr3)
+
+    //在函数中使用
+    function sum(...numbers){
+        let total =0
+        for (let i = 0; i < numbers.length; i++) {
+            total +=numbers[i]
+        }
+        console.log("总大小： "+total)
+
+        return  numbers.reduce((preValue,currentValue)=>{
+            return preValue+currentValue
+        })
+    }
+
+    console.log(sum(1,2,3,4))
+
+    let person={name:'tom',age:18}
+    // console.log(...person) // 展开运算符无法展开对象
+    let person_copy = {...person}
+    console.log(person_copy)
+
+    // 复制对象的同时修改属性
+    let person_copy2 = {...person,name:'Jerry'}
+    console.log(person_copy2)
+</script>
+</body>
+</html>
