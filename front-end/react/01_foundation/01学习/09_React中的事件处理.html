@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>09_React中的事件处理</title>
+</head>
+<body>
+<div id="test"></div>
+
+<!--引入react核心库，多全局变量 REACT-->
+<script type="text/javascript" src="js/react.development.js"></script>
+<!--引入react-dom，用于支持react操作DOM，多全局变量 REACTDOM-->
+<script type="text/javascript" src="js/react-dom.development.js"></script>
+<!--引入babel，用于将jsx转为js-->
+<script type="text/javascript" src="js/babel.min.js"></script>
+<!--引入prop=types，用于对组件标签属性进行限制 PropTypes-->
+<script type="text/javascript" src="js/prop-types.js"></script>
+<!--声明后续的内容为JSX语法，通过babel使用JSX语法-->
+<script type="text/babel">
+    class Demo extends React.Component {
+        /*
+            1. 通过onXxx属性指定事件处理函数
+                a. React使用自定义（合成）事件（更好的兼容性）
+                b. React中的事件是通过事件委托方式处理的（委托给组件最外层的元素）
+            2. 通过event.target得到发生事件的DOM元素对象
+         */
+        myRef = React.createRef()
+        // myRef2 = React.createRef()
+
+        showData= ()=>{
+            console.log(this.myRef.current.value)
+        }
+
+        showData2= (event)=>{
+            console.log(event)
+            console.log(event.target.value)
+        }
+        render() {
+            return (<div>
+                <input ref={this.myRef} type="text" placeholder="input data and click button"/>&nbsp;
+                <button onClick={this.showData}>click to show data</button>
+                &nbsp;
+                {/*
+                    非必要不使用ref
+                <input onBlur={this.showData2} ref={this.myRef2} type="text" placeholder="lose focus to show data"/>
+                */}
+                <input onBlur={this.showData2} type="text" placeholder="lose focus to show data"/>
+            </div>)
+        }
+    }
+
+    ReactDOM.render(<Demo/>,document.getElementById('test'))
+</script>
+</body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>10_非受控组件</title>
+</head>
+<body>
+<div id="test"></div>
+
+<!--引入react核心库，多全局变量 REACT-->
+<script type="text/javascript" src="js/react.development.js"></script>
+<!--引入react-dom，用于支持react操作DOM，多全局变量 REACTDOM-->
+<script type="text/javascript" src="js/react-dom.development.js"></script>
+<!--引入babel，用于将jsx转为js-->
+<script type="text/javascript" src="js/babel.min.js"></script>
+<!--引入prop=types，用于对组件标签属性进行限制 PropTypes-->
+<script type="text/javascript" src="js/prop-types.js"></script>
+<!--声明后续的内容为JSX语法，通过babel使用JSX语法-->
+<script type="text/babel">
+    class Login extends React.Component{
+        // 表单提交后，默认跳转到action指定的地址
+        render(){
+            return (
+                <form action="http://www.google.com" onSubmit={this.handleSubmit}>
+                    user name: <input ref={c=>{this.userNameNode = c}} type="text" name="username"/>
+                    pass word: <input ref={c=>{this.passwordNode =c}} type="password" name="pswd"/>
+                    <button>login</button>
+                </form>
+            )
+        }
+
+        handleSubmit=(event)=> {
+            event.preventDefault() // 阻止表单提交
+            alert(`userNameL: ${this.userNameNode.value} , password: ${this.passwordNode.value}`)
+        }
+    }
+
+    ReactDOM.render(<Login/>,document.getElementById('test'))
+
+</script>
+</body>
+</html>
