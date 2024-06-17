@@ -18,6 +18,20 @@
 <!--声明后续的内容为JSX语法，通过babel使用JSX语法-->
 <script type="text/babel">
     class Count extends React.Component {
+        /**
+         * 1. 初始化阶段：由ReactDOM.render()触发---初次渲染
+         *      1. constructor()
+         *      2. getDerivedStateFromProps()
+         *      3. render()
+         *      4. componentDidMount()
+         * 2. 更新阶段：由组件内部this.setState()或者父组件重新render触发
+         *      1. getDerivedStateFromProps()
+         *      2. shouldComponentUpdate()
+         *      3. render()
+         *      4. componentDidMount()
+         * 3. 卸载组件：由ReactDOM.unmountComponentAtNode()触发
+         *      1. componentWillUnmount()
+         */
         constructor(props) {
             console.log('count-constructor')
             super(props);

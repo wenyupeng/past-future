@@ -7,7 +7,7 @@
         .list{
             width: 200px;
             height: 150px;
-            background-color: azure;
+            background-color: yellow;
             overflow: auto;
         }
         .news{
@@ -36,15 +36,25 @@
                 const {newsArr} = this.state
                 // stimulate new info
                 const news ='news' +(newsArr.length+1)
-                this.setState({newArr:[news,...newsArr]})
+                // console.log('interval',{newArr:[news,...newsArr]})
+                this.setState({newsArr:[news,...newsArr]})
             },1000)
+        }
+
+        getSnapshotBeforeUpdate(){
+            return  this.refs.list.scrollHeight
+        }
+
+        componentDidUpdate(preProps,preState,height){
+            console.log(this.refs.list.scrollTop)
+            this.refs.list.scrollTop += this.refs.list.scrollHeight - height
         }
 
         render(){
             return (
-                <div className="list">
-                    {this.state.newsArr.map((n)=>{
-                        return <div className="news">{n}</div>
+                <div className="list" ref="list">
+                    {this.state.newsArr.map((n,index)=>{
+                        return <div key={index} className="news">{n}</div>
                     })}
                 </div>
             )
