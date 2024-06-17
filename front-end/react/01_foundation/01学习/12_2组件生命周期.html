@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>12_1组件生命周期</title>
+</head>
+<body>
+<div id="test"></div>
+<div id="test1"></div>
+
+<!--引入react核心库，多全局变量 REACT-->
+<script type="text/javascript" src="js/react.development.js"></script>
+<!--引入react-dom，用于支持react操作DOM，多全局变量 REACTDOM-->
+<script type="text/javascript" src="js/react-dom.development.js"></script>
+<!--引入babel，用于将jsx转为js-->
+<script type="text/javascript" src="js/babel.min.js"></script>
+<!--引入prop=types，用于对组件标签属性进行限制 PropTypes-->
+<script type="text/javascript" src="js/prop-types.js"></script>
+<!--声明后续的内容为JSX语法，通过babel使用JSX语法-->
+<script type="text/babel">
+    class Count extends React.Component {
+        constructor(props) {
+            console.log('count-constructor')
+            super(props);
+            this.state = {count: 0}
+        }
+
+        // state = {count: 0}
+
+        add = () => {
+            const {count} = this.state
+            this.setState({count: count + 1})
+        }
+
+        death = () => {
+            ReactDOM.unmountComponentAtNode(document.getElementById('test'))
+        }
+
+        force = () => {
+            this.forceUpdate()
+        }
+
+        componentWillMount() {
+            console.log('count-componentWillMount')
+        }
+
+        componentDidMount() {
+            console.log('count-componentDidMount')
+        }
+
+        componentWillUnmount() {
+            console.log('count-componentWillUnmount')
+        }
+
+        // 默认需要更新，如果返回false则不会更新
+        shouldComponentUpdate() {
+            console.log('count-shouldComponentUpdate')
+            return false
+        }
+
+        componentWillUpdate() {
+            console.log('count-componentWillUpdate')
+        }
+
+        componentDidUpdate() {
+            console.log('count-componentDidUpdate')
+        }
+
+
+        render() {
+            console.log('count-render')
+            const {count} = this.state
+            return (<div>
+                <h2>total sum is {count}</h2>
+                <button onClick={this.add}>click to count 1</button>
+                <button onClick={this.death}>unmount the component</button>
+                <button onClick={this.force}>force update the component</button>
+            </div>)
+        }
+    }
+
+    class A extends React.Component {
+        state = {carName: 'Ben'}
+
+        changeCar = () => {
+            this.setState({carName: 'Audi'})
+        }
+
+        render() {
+            return <div>
+                <div>A component</div>
+                <button onClick={this.changeCar}>change car</button>
+                <B carName={this.state.carName}/>
+            </div>
+        }
+    }
+
+    class B extends React.Component {
+        componentDidMount(){
+            console.log('B-componentDidMount')
+        }
+
+        // 首次传递的参数不会触发该函数
+        componentWillReceiveProps(){
+            console.log('B component receive props')
+        }
+        render(){
+            return (
+                <div>B component, {this.props.carName}</div>
+            )
+        }
+
+    }
+
+    ReactDOM.render(<Count/>, document.getElementById('test'))
+    ReactDOM.render(<A/>, document.getElementById('test1'))
+</script>
+</body>
+</html>

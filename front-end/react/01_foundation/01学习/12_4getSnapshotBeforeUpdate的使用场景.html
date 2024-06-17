@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>12_3getSnapshotBeforeUpdate</title>
+    <style>
+        .list{
+            width: 200px;
+            height: 150px;
+            background-color: azure;
+            overflow: auto;
+        }
+        .news{
+            height: 30px;
+        }
+    </style>
+</head>
+<body>
+<div id="test"></div>
+
+<!--引入react核心库，多全局变量 REACT-->
+<script type="text/javascript" src="js@17/react.development.js"></script>
+<!--引入react-dom，用于支持react操作DOM，多全局变量 REACTDOM-->
+<script type="text/javascript" src="js@17/react-dom.development.js"></script>
+<!--引入babel，用于将jsx转为js-->
+<script type="text/javascript" src="js@17/babel.min.js"></script>
+<!--引入prop=types，用于对组件标签属性进行限制 PropTypes-->
+<script type="text/javascript" src="js@17/prop-types.js"></script>
+<!--声明后续的内容为JSX语法，通过babel使用JSX语法-->
+<script type="text/babel">
+    class NewsList extends React.Component{
+        state ={newsArr:[]}
+
+        componentDidMount(){
+            setInterval(()=>{
+                const {newsArr} = this.state
+                // stimulate new info
+                const news ='news' +(newsArr.length+1)
+                this.setState({newArr:[news,...newsArr]})
+            },1000)
+        }
+
+        render(){
+            return (
+                <div className="list">
+                    {this.state.newsArr.map((n)=>{
+                        return <div className="news">{n}</div>
+                    })}
+                </div>
+            )
+        }
+    }
+
+    ReactDOM.render(<NewsList/>, document.getElementById('test'))
+</script>
+</body>
+</html>

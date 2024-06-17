@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>12_1组件生命周期</title>
+</head>
+<body>
+<div id="test"></div>
+
+<!--引入react核心库，多全局变量 REACT-->
+<script type="text/javascript" src="js/react.development.js"></script>
+<!--引入react-dom，用于支持react操作DOM，多全局变量 REACTDOM-->
+<script type="text/javascript" src="js/react-dom.development.js"></script>
+<!--引入babel，用于将jsx转为js-->
+<script type="text/javascript" src="js/babel.min.js"></script>
+<!--引入prop=types，用于对组件标签属性进行限制 PropTypes-->
+<script type="text/javascript" src="js/prop-types.js"></script>
+<!--声明后续的内容为JSX语法，通过babel使用JSX语法-->
+<script type="text/babel">
+    class Life extends React.Component {
+
+        state ={opacity: 1}
+
+        // render中有方法支持，不需要这样处理
+        // action =()=>{
+        //     setInterval(()=>{
+        //         let {opacity} = this.state
+        //         opacity -=0.1
+        //         if (opacity<=0) opacity =1
+        //         this.setState({opacity})
+        //     },200)
+        // }
+
+        // 组件挂在页面之后调用
+        componentDidMount(){
+            this.timer = setInterval(()=>{
+                let {opacity} = this.state
+                opacity -=0.1
+                if (opacity<=0) opacity =1
+                this.setState({opacity})
+            },200)
+        }
+
+        // 组件将要卸载
+        componentWillUnmount(){
+            clearInterval(this.timer)
+        }
+
+        // render调用的时机：初始化渲染、状态更新之后
+        render() {
+        // 定时器可以放在render中，但是定时器不能修改state状态，因为state状态的修改会触发render重新执行
+            // setInterval(()=>{
+            //     let {opacity} = this.state
+            //     opacity -=0.1
+            //     if (opacity<=0) opacity =1
+            //     this.setState({opacity})
+            // },200)
+
+            return (<div>
+                <h2 style={{opacity: this.state.opacity}}>color is changing</h2>
+                <button onClick={this.death}>remove component</button>
+                {/*
+                <button onClick={this.action}>start change</button>
+                */}
+            </div>)
+        }
+
+        death = () => {
+            //等效组件清除时调用
+            // clearInterval(this.timer)
+            ReactDOM.unmountComponentAtNode(document.getElementById('test'))
+        }
+    }
+
+    ReactDOM.render(<Life/>, document.getElementById('test'))
+
+</script>
+</body>
+</html>
