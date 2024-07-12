@@ -23,3 +23,28 @@ haptic devices
 
 ---
 
+terminology 术语
+manipulated 被操纵的
+
+help you better understand Class/Object/....
+1. Class, like a template, you can describe what you want to create, example:  you want to create a Person, firstly, you have to list the fields of Person, such as name, age, gender.... and some actions(methods), then you can get a Person class like this:
+Class Person{
+String name;
+int age;
+char gender;
+
+void Sing(){}
+void Swimming(){}
+}
+2. Object, by using the Person template, you can tell the computer that I want to use memory(heap) to new an object, after the computer allocate a memory address for you, you succeed in creat a object.
+Person obj=new Person();
+3. Variable, when we create an object, we usually use variable to record the address(actually, you can use anonymous object, like this `new Person()`, `new Person()` is an object without name), variable is stored in the stack. When we use variable to link a value, the variable is a value, but when we use variable to link an object, the variable is a address.
+   int a = 100;
+   Program b= new Program();
+
+hope you can understand what I say
+
+
+
+
+
