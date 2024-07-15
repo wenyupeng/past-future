@@ -54,4 +54,6 @@ The elements of a domain model are:
   - classes can be specialisations of more general classes, in which case the relationship between them is a generalisation. In the example diagram we can see one generalisation between each of the specialisations, Walk-in and Reservation and the generalisation Booking
   - represented by a relationship line in which the end connecting to the general class is an unfilled triangle.
 - constraints
+  - indicate conditions that affect entities but cannot be expressed using the graphical elements used in domain model diagrams
+  - are textual notes that are associated by entities using dashed lines.
 ---
