@@ -57,3 +57,18 @@ The elements of a domain model are:
   - indicate conditions that affect entities but cannot be expressed using the graphical elements used in domain model diagrams
   - are textual notes that are associated by entities using dashed lines.
 ---
+
+# Feasibility analysis
+Feasibility analysis is performed to identify potential risks before the project starts and to identify constraints and restrictions on how a problem can be solved.
+
+In fact, constraints are as important as requirements, as they dictate what the system should not do and what the system should not be.
+
+There are several types of feasibility analysis that need to be undertaken, each providing insights into the overall feasibility of the solution. These are:
+- economic (financial)
+- technical
+- operational
+- scheduling (resources)
+- legal and contractual
+- political.
+
+
