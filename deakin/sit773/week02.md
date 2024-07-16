@@ -72,3 +72,61 @@ There are several types of feasibility analysis that need to be undertaken, each
 - political.
 
 
+ramifications 后果
+## Economic feasibility
+Economic feasibility analysis considers the cost and benefit of the proposed system.
+
+Both costs and benefits can be tangible and intangible:
+
+Tangible costs: are direct expenditures by the business that can be measured; eg the purchase of hardware and resources
+Intangible costs: are known to negatively affect the business’ finances but cannot be quantified; eg the time and effort involved in training users of the system
+Tangible benefits: are measurable and positive financial impacts of the system on the business; eg reduced operational costs, new paid services
+Intangible benefits: improve the finances of the business but not in measurable ways; eg improved customer service.
+
+## Break-even analysis
+A break-even analysis is performed to estimate whether, and to what extent, a system will provide value to the business when all costs and benefits are considered.
+
+# project scope and requirements
+A well-defined project scope determines the objectives of the project and informs the project team of what is included in the project and what is excluded.
+
+Project scope is a statement of everything that will be involved in a specific project. This includes:
+
+the resources involved in the project
+the information that will be accumulated during the project
+the artifacts the project will deliver
+all planned work activities.
+
+The scope of a project is extractable from the requirements of the system, since those requirements ultimately define what the system should be and determine the amount of effort required to produce the system
+
+Because project scope is related to system requirements, project scoping is normally not possible in the planning phase of the project and instead occurs during the early or middle stages of the analysis phase.
+
+# Vision statements
+The vision statement captures the essence of the system and acts as a guide to those working on it.
+
+Vision statements need to be brief; they’re meant to explain a potentially complex, multifaceted product from a high level, without getting into details.
+
+a simple technique is presented that can be used to help you write a vision statement. First, define the following about the system:
+For (target customer)
+Who (statement of need)
+The (product name) is a (product category) that (key benefit)
+Unlike (primary alternative)
+Our product (statement of differentiation)
+~~~
+For business e-mail users who want to better manage the increasing number of messages they receive when out of the office, the BlackBerry is a mobile e-mail solution that provides a real-time link to their desktop e-mail for sending, reading and responding to important messages. Unlike other mobile e-mail solutions, BlackBerry is wearable, secure, and always connected.
+~~~
+
+# pain points
+
+# Problem statement
+Using the pain points information the following statement was formulated:
+
+The problem of limited parking spots within the Metro CBD area affects residents and visitors, the result of which is the unavailability of parking spots and the time and effort required for finding available spots. The benefits of the proposed solution is the ability of drivers to reserve parking spots for their vehicles before arriving at the location, eliminating the time it takes to find parking.
+
+# domain 
+## Creating the Domain Model
+1. determining the data each entity contains
+2. analysing the relationships between entities
+3. investigating how many entities can be related to each other (cardinality)
+
+
+
