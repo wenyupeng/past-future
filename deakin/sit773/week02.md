@@ -128,7 +128,5 @@ The problem of limited parking spots within the Metro CBD area affects residents
 2. analysing the relationships between entities
 3. investigating how many entities can be related to each other (cardinality)
 
-The Software Development Lifecycle (SDLC) is composed of a series of phases, each with its own objectives and outcomes. The main route of the SDLC includes planning, analysis, design, implementation, and maintenance.
-When in the planning phase,
 
 
