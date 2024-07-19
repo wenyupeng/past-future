@@ -10,8 +10,9 @@ public class Account
         this._balance = _balance;
     }
 
-    public string Name{
-        get{return _name;}
+    public string Name
+    {
+        get { return _name; }
     }
 
     public void Print()
@@ -19,21 +20,23 @@ public class Account
         Console.WriteLine($"Hi {_name}, your balance is {_balance}");
     }
 
-    public decimal Withdraw(decimal amount)
+    public void Withdraw(decimal amount)
     {
-        if(this._balance <amount){
+        if (_balance < amount)
+        {
             Console.WriteLine($"sorry {_name}, you do not have enough money to withdraw");
-            return 0;
         }
-        this._balance=this._balance - amount;
-        Console.WriteLine($"you have successfull withdraw {amount}");
-        return amount;
+        else
+        {
+            _balance -= amount;
+            Console.WriteLine($"you have successfull withdraw {amount}");
+        }
     }
 
     public void Deposit(decimal amount)
     {
 
-        this._balance = this._balance + amount;
+        _balance += amount;
         Console.WriteLine($"sucessful add {amount}");
     }
 

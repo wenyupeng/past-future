@@ -11,13 +11,22 @@ namespace BankProgram
     {
         public static void Main()
         {
-            Account account =new Account("Chris",200000);
-            account.Print();
-            account.Deposit(100);
-            account.Print();
+            Account chrisAccount =new Account("Chris",200000);
+            chrisAccount.Print();
+            chrisAccount.Deposit(100);
+            chrisAccount.Print();
 
-            account.Withdraw(20000);
-            account.Print();
+            chrisAccount.Withdraw(20000);
+            chrisAccount.Print();
+
+            Account tomAccount =new Account("Tom",10000);
+            tomAccount.Print();
+            tomAccount.Deposit(180);
+            tomAccount.Print();
+
+            tomAccount.Withdraw(1000);
+            tomAccount.Print();
+
         }
     }
 }
