@@ -20,23 +20,26 @@ namespace BankProgram
     {
         public static void Main()
         {
-            Account account = null;
-            MenuOption option = ReadUserOption();
-            switch (option)
+            Account account = new Account("Chris", 20000000);
+            do
             {
-                case MenuOption.Withdraw:
-                    DoWithdraw(account);
-                    break;
-                case MenuOption.Deposit:
-                    DoDeposit(account);
-                    break;
-                case MenuOption.Print:
-                    DoPrint(account);
-                    break;
-                case MenuOption.Quit:
-                default:
-                    break;
-            }
+                MenuOption option = ReadUserOption();
+                switch (option)
+                {
+                    case MenuOption.Withdraw:
+                        Console.WriteLine("withdraw {0}",DoWithdraw(account)?"success":"fail");
+                        break;
+                    case MenuOption.Deposit:
+                        Console.WriteLine("withdraw {0}",DoDeposit(account)?"success":"fail");
+                        break;
+                    case MenuOption.Print:
+                        DoPrint(account);
+                        break;
+                    case MenuOption.Quit:
+                    default:
+                        break;
+                }
+            } while (true);
         }
 
         private static MenuOption ReadUserOption()
@@ -46,12 +49,12 @@ namespace BankProgram
             {
 
                 Console.WriteLine(
-                    "~~~~~~~~~~~~~~~~~~~~~~~~~~~~" +
-                    "|Please enter your option: |" +
-                    "|1 Withdraw                |" +
-                    "|2 Deposit                 |" +
-                    "|3 Print                   |" +
-                    "|4 Quit                    |" +
+                    "~~~~~~~~~~~~~~~~~~~~~~~~~~~~\r\n" +
+                    "|Please enter your option: |\r\n" +
+                    "|1 Withdraw                |\r\n" +
+                    "|2 Deposit                 |\r\n" +
+                    "|3 Print                   |\r\n" +
+                    "|4 Quit                    |\r\n" +
                     "~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
                 );
                 string optionStr = Console.ReadLine();
@@ -80,12 +83,40 @@ namespace BankProgram
 
         public static bool DoDeposit(Account account)
         {
-            return true;
+            int depositMoney;
+            do
+            {
+                try
+                {
+                    Console.WriteLine("How much would you want to deposit?");
+                    depositMoney = Convert.ToInt32(Console.ReadLine());
+                    break;
+                }
+                catch (System.Exception)
+                {
+                    Console.WriteLine("invalid input, please input again");
+                }
+            } while (true);
+            return account.Deposit(depositMoney);
         }
 
-        public static Account DoWithdraw(Account account)
+        public static bool DoWithdraw(Account account)
         {
-            return account;
+            int withdrawMoney;
+            do
+            {
+                try
+                {
+                    Console.WriteLine("How much would you want to withdraw?");
+                    withdrawMoney = Convert.ToInt32(Console.ReadLine());
+                    break;
+                }
+                catch (System.Exception)
+                {
+                    Console.WriteLine("invalid input, please input again");
+                }
+            } while (true);
+            return account.Withdraw(withdrawMoney);
 
         }
         public static void DoPrint(Account account)
