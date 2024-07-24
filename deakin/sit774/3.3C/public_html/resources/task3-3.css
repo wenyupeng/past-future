@@ -1,0 +1,107 @@
+html {
+    font-family: Mate, Georgia, Garamond, 'Times New Roman', serif, 'Righteous', 'Orbitron', 'Philosopher';
+}
+
+body {
+    background-color: cornsilk;
+    background-image: url("https://images.unsplash.com/photo-1569520045266-66f21ad8a4be?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
+    background-attachment: fixed;
+    background-blend-mode: normal;
+}
+
+nav {
+    display: flex;
+    justify-content: center;
+    margin: 1.5em;
+    font-family: 'Cinzel', Georgia, Garamond, 'Times New Roman', serif, 'Righteous', 'Orbitron', 'Philosopher';
+    font-weight: 900;
+    font-size: 1.2em;
+}
+
+nav ul {
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+    overflow: hidden;
+    display: table;
+}
+
+nav li{
+    float: left;
+    border-right: solid 1px grey;
+}
+
+nav li:last-child{
+    border-right: none;
+}
+
+nav a{
+    color: white;
+    background-color: #11b1b3;
+    display: block;
+    text-align: center;
+    padding: 1.0rem 2.2rem 1.0rem 2.2rem;
+}
+
+nav a:hover{
+    color: #11b1b3;
+    background-color: #ffffff;
+    border: 1px solid #0eb482;
+}
+section {
+    margin: 0.5em;
+    padding-bottom: 0.8em;
+}
+
+footer {
+    color: White;
+    text-align: center;
+    font-size: 0.8em;
+    padding: 0.2em;
+    background-color: #008F88;
+}
+
+footer p {
+    margin: 0.1em;
+}
+
+h1,
+h2,
+h3 {
+    font-family: 'Merriweather', Verdana, Tahoma, sans-serif, 'Righteous', 'Orbitron', 'Philosopher';
+    font-style: italic;
+}
+
+h1 {
+    letter-spacing: 0.2em;
+    background-color: #004643;
+    color: white;
+    padding: 1.1rem;
+    text-align: center;
+}
+
+h1,
+h2,
+.content {
+    padding: 1.0rem;
+}
+
+.content {
+    background-color: white;
+    opacity: 0.93;
+}
+
+h2,
+h3 {
+    background-color: gold;
+    color: #0c1618;
+    padding-top: 0.8em;
+    padding-bottom: 0.3em;
+    padding-left: 1.0rem;
+    padding-right: 1.0rem;
+}
+
+.highlight {
+    background-color: peachpuff;
+    font-weight: bold;
+}

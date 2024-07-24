@@ -1,0 +1,62 @@
+html {
+    font-family: Mate, Georgia, Garamond, 'Times New Roman', serif, 'Righteous', 'Orbitron', 'Philosopher';
+}
+
+body {
+    background-color: cornsilk;
+}
+
+nav {
+    margin: 1.5em;
+    font-family: 'Cinzel', Georgia, Garamond, 'Times New Roman', serif, 'Righteous', 'Orbitron', 'Philosopher';
+    font-weight: 900;
+    font-size: 1.2em;
+    margin: 1.5em;
+}
+
+section {
+    border-style: solid;
+    margin: 0.5em;
+}
+
+footer {
+    color: White;
+    text-align: center;
+    font-size: 0.8em;
+    padding: 0.2em;
+    background-color: #008F88;
+}
+
+footer p{
+    margin: 0.1em;
+}
+
+h1,
+h2,
+h3 {
+    font-family: 'Merriweather', Verdana, Tahoma, sans-serif, 'Righteous', 'Orbitron', 'Philosopher';
+    font-style: italic;
+}
+
+h1 {
+    letter-spacing: 0.2em;
+    background-color: #004643;
+    color: white;
+    padding: 1.1rem;
+    text-align: center;
+}
+
+h2,
+h3 {
+    background-color: gold;
+    color: #0c1618;
+    padding-top: 0.8em;
+    padding-bottom: 0.3em;
+    padding-left: 0em;
+    padding-right: 0em;
+}
+
+.highlight {
+    background-color: peachpuff;
+    font-weight: bold;
+}
