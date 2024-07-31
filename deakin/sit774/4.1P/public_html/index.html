@@ -13,7 +13,7 @@
 
 <body>
     <nav class="navbar navbar-expand-lg bg-primary">
-        <div class="container-fluid ms-5">
+        <div class="container-fluid mx-5">
             <a class="navbar-brand padding-left text-white" href="#">
                 <img src="./resources/men-cap-icon.svg" alt="dKinCaps" width="30" height="24">
                 dKinCaps
@@ -33,12 +33,182 @@
             </div>
         </div>
     </nav>
-    <div class="container mt-5 text-center .bg-secondary-subtle">
-        <h1 class="fs-1">dKin Caps</h1>
-        <p class="ps-6 fs-4">A young and inspiring organisation whose primary purpose is to bring you the highest
-            qualityheadwear available.</p>
+    <div class="container-fluid text-center bg-primary-subtle">
+        <p class="pt-5 fs-1 fw-normal lh-base">dKin Caps</p>
+        <p class="pb-5 ps-7 fs-4">A young and inspiring organisation whose primary purpose is to bring you the highest
+            quality headwear available.</p>
 
     </div>
+    <div class="mx-5">
+        <h1>Introduction</h1>
+        <p>This is the simple page that shows a number of bootstrap components and the styles they provide to enhance
+            plain HTML content - while also supporting a responsive display (screen resizing).
+            <br>
+            <br>
+            Firstly, at the top of the page, within a <span class="text-danger">&lt;header&gt;..&lt;/header&gt;</span>
+            section, it is common to have the <b>navigation</b> and some form of <b>banner / heading</b> content. Here
+            we have a list using the Bootstrap <span class="text-danger">&lt;nav&gt;...&lt;/nav&gt;</span> component in
+            a container with five links to diferent parts of the webpage, with a blue (<span
+                class="text-danger">bg-primary</span>)background and white (<span class="text-danger">text-white</span>)
+            text. While a second <span class="text-danger">container-fluid</span> with a light blue (<span
+                class="text-danger">bg-primary-subtle</span>) holds the <b>banner</b> details in a centred column of
+            width 8 (<span class="text-danger">col-sm-8 mx-auto text-center py-5</span>) and comprising a title of the
+            page and leading sentence.
+            <br>
+            <br>
+            Next is the <span class="text-danger">&lt;body&gt;...&lt;/body&gt;</span> section that holds the
+            <b>content</b> of the page. The content includes the folowing sections: Introduction (this), Data, Pictures,
+            Stories and a Summary, The table content is formatted, while the pictures and stories of ice creams applies
+            differing responsive layouts.
+            <br>
+            <br>
+            The final section is a <span class="text-danger">&lt;footer&gt;...&lt;/footer&gt;</span>.
+            <br>
+            <br>
+            Note that each section has a hyperlink to the <span class="text-danger">Top</span> of the document for
+            navigation.
+        </p>
+        <a class="d-flex justify-content-end" href="#" target="_top">Top</a>
+    </div>
+
+    <div class="mx-5">
+        <h1>Hat Usage Data</h1>
+        <p>In this section of the page,we have a nice table with some data from a survey conducted in 2013 as
+            pubished in the paper'<a href="#">A study on Hat User Habits andTheir perceplion of the Product
+                Form</a>', The table below is styled with the bootstrap classes table <span
+                class="text-danger">table-striped-columns table-hover</span>, and the <span
+                class="text-danger">table-primary</span> applied to the table header <span
+                class="text-danger">thead</span>. Some rows in the table also use the <span
+                class="text-danger">colspan</span> control. Note, the table also includes a caption and is
+            constrained to 10 columns on wider screens and all 12 columns on small screens (i.e., <span
+                class="text-danger">col-md-10 col-12 mx-auto</span>).</p>
+    </div>
+    <div class="col-md-10 col-12 mx-auto">
+        <table class="container table table-striped-columns table-hover">
+            <caption>Hat Usage Behavior Data (54 respondents, 2013)</caption>
+            <thead class="table-primary">
+                <th>Item</th>
+                <th>Male</th>
+                <th>Female</th>
+                <th>Total</th>
+            </thead>
+            <tbody>
+                <tr>
+                    <td colspan="4"><b>Do you usually wear a hat? (Often wearing a hat)</b></td>
+                </tr>
+                <tr>
+                    <td>Yes</td>
+                    <td>11</td>
+                    <td>10</td>
+                    <td>21</td>
+                </tr>
+                <tr>
+                    <td>No</td>
+                    <td>21</td>
+                    <td>12</td>
+                    <td>33</td>
+                </tr>
+                <tr>
+                    <td colspan="4"><b>How often do you clean your hat? (frequency of hat washing)</b></td>
+                </tr>
+                <tr>
+                    <td>Whenever it gets dirty</td>
+                    <td>17</td>
+                    <td>17</td>
+                    <td>34</td>
+                </tr>
+                <tr>
+                    <td>Once a week</td>
+                    <td>4</td>
+                    <td>0</td>
+                    <td>4</td>
+                </tr>
+                <tr>
+                    <td>About once a month</td>
+                    <td>4</td>
+                    <td>1</td>
+                    <td>5</td>
+                </tr>
+                <tr>
+                    <td>Never</td>
+                    <td>7</td>
+                    <td>4</td>
+                    <td>11</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <a class="mx-5 d-flex justify-content-end" href="#" target="_top">Top</a>
+    <div class="mx-5">
+        <h1>Pictures of Hats (Responsive Layout)</h1>
+        <p>Below are some nice pictures of hats and caps, license-free images downloaded from the website <a
+                href="#">Unsplash</a>, These images are placed in a single bootstrap <span class="text-danger">row
+                g-2</span> (where the g-2 adds a gutter size 2 between the images) composed of columns using a combined
+            <span class="text-danger">col-sm-4 col-12</span>. The colsm-4 forces 3 images to be ina row on allscrens
+            sizes <b>except</b> veny small ones (&lt;576px) where the col-12 forces the images to use all 12 column grid
+            units and stack each image on top oleach other, Each image has the class <span
+                class="text-danger">img-fluid</span> applied to it, allowing it resize to the size of the column.
+        </p>
+        <div class="row g-2 col-12">
+            <img class="col-sm-4" src="./resources/devin-justesen-USczKmWK7P0-1-unsplash.jpg">
+            <img class="col-sm-4" src="./resources/alexandra-tran-BYP0MCacQXg-1-unsplash.jpg">
+            <img class="col-sm-4" src="./resources/brennan-burling-gZ9K9IlkvJA-1-unsplash.jpg">
+        </div>
+    </div>
+    <a class="mx-5 d-flex justify-content-end" href="#" target="_top">Top</a>
+
+    <div class="mx-5">
+        <h1>Hat Stories</h1>
+        <p>The following three images and text are each held within <span class="text-danger">div</span> block that the
+            class attributes <span class="text-danger">p-4 mb-4 bg-primary-subtle rounded</span>, to set the padding,
+            margin.below,background colour and corner shape, respectively, Each lmage & Text holds a <span
+                class="text-danger">row</span>, with the text assigned to 7 column units <span
+                class="text-danger">col-sm-7</span> and the image isassigned to <span
+                class="text-danger">col-sm-5</span>; alowing the text and images to span 5 and 7 column units
+            respectively on screns greater than 576px units, Added to each of these two columns is the <span
+                class="text-danger">col-12</span>, which says when the screen is smaler than 576px, it will then use all
+            12 columns grids for each image and text, aowing them to be stacked on top of each other.</p>
+        <div class="p-4 mb-4 bg-primary-subtle rounded row">
+            <div class=" col-sm-7">
+                <p class="lead">Sun Hats by <b>Adiran Siaril</b></p>
+                <p class="small">Here, the class <span class="text-danger">img-fluid rounded</span> has been applied to
+                    the image. The
+                    title above uses <span class="text-danger">&lt;p class="lead"&gt;</span> to make the text standout,
+                    While this text uses the <span class="text-danger">&lt;p class="small"&gt;</span> to distinguishit
+                    from
+                    the normal paragraphs.</p>
+            </div>
+            <div class="col-sm-5">
+                <img class="img-fluid" src="./resources/adrian-siaril-Lf8c4IBEMaQ-1-unsplash.jpg">
+            </div>
+        </div>
+        <div class="p-4 mb-4 bg-primary-subtle rounded row">
+            <div class="col-sm-7">
+                <p class="lead">Baseball Cpas by <b>Shlok Jethwa</b></p>
+                <p>
+                    Another picture showing the diverse range of colours and styles that baseball caps come in. Herethe
+                    class <span class="text-danger">img-fluid rounded-pill</span> applied to it.</p>
+            </div>
+            <div class="col-sm-5">
+                <img class="img-fluid rounded-pill" src="./resources/shlok-jethwa-CI1HxiH1T3w-1-unsplash.jpg">
+            </div>
+        </div>
+    </div>
+    <a class="mx-5 d-flex justify-content-end" href="#" target="_top">Top</a>
+
+    <div class="mx-5">
+        <h1>Summary</h1>
+        <p>This then concludes the content in the <span class="text-danger">main</span> section of the page. Note that the end of each content block is a hyperink back to the <b>Top</b> of the page. It uses the
+            <span class="text-danger">&lt;p class="text-end"&gt;</span> to align to the right of the screen.
+            <br>
+            <br>
+            The next and final section is the <span class="text-danger">footer</span> which uses <span class="text-danger">div</span> styled with the class <span class="text-danger">container-fluid p-2 bg-dark text-white</span> to align the paragraph text in centre of
+            the container.</p>
+    </div>
+    <a class="mx-5 d-flex justify-content-end" href="#" target="_top">Top</a>
+    <footer class="container-fluid p-2 bg-dark text-white text-center">
+        @copy 2024 A webpage footer with important info.
+    </footer>
 </body>
 
 </html>
