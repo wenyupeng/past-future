@@ -7,7 +7,7 @@ namespace RobotDodge
     {
         private Bitmap _PlayerBitmap;
         private Window _GameWindow;
-
+        const int GAP = 10;
         public double X
         {
             get;
@@ -56,6 +56,15 @@ namespace RobotDodge
             _GameWindow.DrawBitmap(_PlayerBitmap, X, Y);
         }
 
+        public void SumNumber()
+        {
+            int sum = 0;
+            for (int i = 1; i >= 10; i++)
+            {
+                sum +=i;
+            }
+        }
+
         public void HandleInput()
         {
             SplashKit.ProcessEvents();
@@ -98,11 +107,37 @@ namespace RobotDodge
 
         public void StayOnWindow(Window limit)
         {
+            if (X < GAP)
+            {
+                X = GAP;
+            }
+            else if (Y < GAP)
+            {
+                Y = GAP;
+            }
+            else if (X + _PlayerBitmap.Width > limit.Width - GAP)
+            {
+                X = limit.Width - GAP - _PlayerBitmap.Width;
+            }
+            else if (Y + _PlayerBitmap.Height > limit.Height - GAP)
+            {
+                Y = limit.Height - GAP - _PlayerBitmap.Height;
+            }
+            else
+            {
 
+            }
+
+            Draw();
         }
+
         public bool CollidedWith(Robot other)
         {
-            return false;
+            return _PlayerBitmap.CircleCollision(X, Y, other.CollisionCircle);
         }
     }
 }
+
+
+
+

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sticky Navbar Example</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .sticky-top {
+            position: -webkit-sticky;
+            position: sticky;
+            top: 0;
+            z-index: 1030;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light ">
+        <a class="navbar-brand" href="#">Navbar</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Features</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Pricing</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <header class="header-section" style="height: 100vh; background-color: #f8f9fa;">
+        <div class="container">
+            <h1 class="mt-5">Header Section</h1>
+            <p class="lead">This is the header section of the page.</p>
+        </div>
+    </header>
+
+    <main class="main-section" style="height: 200vh; background-color: #e9ecef;">
+        <div class="container">
+            <h2 class="mt-5">Main Section</h2>
+            <p class="lead">This is the main section of the page. The sticky Navbar should stop being sticky when this
+                section is reached.</p>
+        </div>
+    </main>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        window.addEventListener('scroll', function () {
+            var nav = document.querySelector('nav');
+            if (window.pageYOffset > $(".header-section").height()) {
+                nav.classList.add('fixed-top');
+            } else {
+                nav.classList.remove('fixed-top');
+            }
+        });
+    </script>
+</body>
+
+</html>

@@ -20,8 +20,8 @@ namespace RobotDodge
 
         private SplashKitSDK.Color _MainColor;
 
-        private int _Width;
-        private int _Height;
+        // private int _Width;
+        // private int _Height;
 
         public int Width
         {
@@ -32,6 +32,10 @@ namespace RobotDodge
             get { return 50; }
         }
         private Circle _CollisionCircle;
+
+        public Circle CollisionCircle{
+            get{ return _CollisionCircle;}
+        }
 
         public Robot(Window gameWindow)
         {

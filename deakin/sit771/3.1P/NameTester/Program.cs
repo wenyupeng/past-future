@@ -37,6 +37,7 @@ namespace NameTester
                 }
             } while (userSelection != MenuOption.Quit);
         }
+
         private static int ReadGuess(int min, int max)
         {
             Console.WriteLine("Enter your guess between {0} and {1}", min, max);
