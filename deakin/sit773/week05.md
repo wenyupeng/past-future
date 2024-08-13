@@ -97,7 +97,7 @@ The top section includes following items:
 | Related use cases | This mentions the use cases those are related with this use case and the way they are related e.g. «include», «extend» relationships                                                                                                                  |
 | Stakeholders      | These are the people (other than specific actors) who do not invoke the use case. They have interest in results produced through the execution of this use case                                                                                       |
 | Precondition      | A set of constraints/ criteria that must be true before this use case can be initiated. This can be another use case that must be previously executed. Or it identifies the state of the system that must exist before this use case can be executed. | 
-| Postcondition     | A set of constraints/ criteria that must be true upon completion of the execution of this use case can be initiated. Or it identifies the state of the system that must exist after this use case has been successfully executed                      |
+| Post condition    | A set of constraints/ criteria that must be true upon completion of the execution of this use case can be initiated. Or it identifies the state of the system that must exist after this use case has been successfully executed                      |
 
 ### middle section
 The middle section includes the typical course of events which is the normal sequence of activities performed by the actor and the system.
