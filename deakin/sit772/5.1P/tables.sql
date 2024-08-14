@@ -1,3 +1,4 @@
+use SIT772;
 CREATE TABLE employee (
 	employeeName CHAR(15) NOT NULL,
 	street	CHAR(15),
