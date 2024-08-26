@@ -1,4 +1,3 @@
-
 # Software development lifecycles
 ## Predictive lifecycles
 Predictive lifecycles are designed to follow a series of steps, or phases, where each phase, upon completion, provides the prerequisites for the next phase of the system’s development.
@@ -95,7 +94,10 @@ If the customer accepts the prototype, then the prototype is expanded and refine
 
 A rejected prototype is an unfortunate loss in terms of project time and resources, but it is much less expensive to identify errors early in the project.
 
+## The throw-away prototyping lifecycle
+Throw-away prototyping also involves creating prototypes — but each prototype is discarded after it has been evaluated.
 
+The purpose of throw-away prototyping is to rapidly iterate on a design and to make sure that design is sound before progressing to the implementation of the final system.
 
 
 
