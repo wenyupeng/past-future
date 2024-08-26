@@ -100,11 +100,75 @@ Throw-away prototyping also involves creating prototypes — but each prototype 
 The purpose of throw-away prototyping is to rapidly iterate on a design and to make sure that design is sound before progressing to the implementation of the final system.
 
 
+## Agile development
+Agile development is based on the idea that each software project is unique and as a consequence, the lifecycle model must be adaptable in order to cater to the needs of each project.
+
+Essentially what this means is that, while the general guidelines for agile development can be carried over from project to project — they can be tweaked to suit the project and its requirements.
+
+### Agile methodology
+Essentially, agile development can be defined by four principles, known as the agile methodology:
+
+- Working software — having a functional system constructed in either a single or many iterations, is much more 
+valuable than documentation purporting to describe the system — especially for stakeholders.
+- Customer collaboration — maintaining a continuous connection with the customer is important for identifying 
+  requirements and defining an appropriate solution.
+- Responding to change — an agile project must be able to quickly respond to any changes, adjusting the project 
+  efforts as required.
+- Individuals and interactions — Motivation and organisation of each individual working on a project is important, as 
+  are productive interactions such as pair programming (working in pairs to create the software implementation of the system).
+
+### Advantages
+- Can have a positive influence on teamwork and cross discipline training through activities such as pair programming.
+- Each iteration implements functionality, therefore a functional system can be demonstrated to key stakeholders at 
+  regular intervals.
+- Accounts for the reality that requirements can, and do change — and reflects this in the way the project is run.
+- Continual integration with the customer helps to ensure the project is moving in the right direction.
+- Obtaining continual customer feedback enables the project team’s to (ideally) maximise the value of the system to 
+  the customer.
+### Disadvantages
+- Continual customer feedback could result in scope creep due to continually changing requirements based on customer 
+input.
+- Overall project schedules and costings are difficult because of the continuous change in the project.
+- Requires motivation from the project team to commit to continual processes.
 
 
+## Scrum framework
+There are a number of factors that make up the Scrum framework and they are detailed below. The diagram provided covers the events and artefacts associated with a Scrum project.
 
+### People
+There are a number of people involved in software development. In the context of Scrum they are:
 
+**Product Owner**
+the customer that has invested in developing a software solution that caters to specific business needs.
+**Scrum Master**
+provides an array of services to the project, including interacting with the product owner (customer), overseeing the project as a whole and working with and developing the skills of the development team.
+**Project Team**
+the individuals who make up the project team including analysts, designers, programmers, developers etc.
+### Events
+The events that occur within a Scrum project are highlighted in yellow boxes in the diagram above:
 
+**The Sprint**
+Scrum is centred around Sprints. In each Sprint a unique piece of functionality is added to the system. Each addition is referred to as an increment. Each Sprint has a strict time period in which it must be completed, which can range from one week up to one month.
+**Sprint Planning**
+is the process used to plan for a Sprint and understand the context of what the Sprint will implement.
+**Daily Scrum Meetings**
+a brief meeting conducted each day in order to establish a clear view as to what has been achieved since the previous daily meeting, and to plan for the next 24 hours of project development. Typically, these meetings take 15 minutes.
+**Sprint Review**
+held at the end of every Sprint to review the system increment that was developed. This provides an opportunity to showcase the system to the product owner and any relevant stakeholders.
+**Sprint Retrospective**
+this is held after the Sprint review has occurred and provides an opportunity to analyse and critique the processes and techniques used during the Sprint. This information can be used to plan the next Sprint.
+### Artefacts
+There are a number of artefacts that are produced by Scrum projects, highlighted in the diagram above as blue boxes:
+
+**Product Backlog**
+represents all of the features that the final software system should ideally implement in a complete state
+typically categorised in order of priority. As new features are identified, the product backlog grows.
+**Sprint Backlog**
+represents all of the features that a specific Sprint will implement. The Sprint backlog is compiled by identifying the items within the product backlog that need to be implemented in the next Sprint.
+**Increment**
+the software output of a Sprint, which is delivered when a Sprint is completed.
+**Burndown chart**
+provides a visual representation of the amount of effort involved in developing a Sprint. This concept will be explored next week.
 
 
 
