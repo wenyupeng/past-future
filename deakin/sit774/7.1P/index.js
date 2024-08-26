@@ -1,6 +1,6 @@
 function processTextOld() {
-    let originInputString = "I love wearing a baseball cap on a sunny afternoon at the park made me feel effortlessly" + " cool " + "and shielded from the glaring sun. The soft fabric of the cap and it's relaxed fit gave me a " + "sense of casual ease, perfect for a day of laid-back enjoyment. Absolutely love my cap!";
-    // let originInputString = document.getElementById("exampleFormControlTextarea1").value;
+    // let originInputString = "I love wearing a baseball cap on a sunny afternoon at the park made me feel effortlessly" + " cool " + "and shielded from the glaring sun. The soft fabric of the cap and it's relaxed fit gave me a " + "sense of casual ease, perfect for a day of laid-back enjoyment. Absolutely love my cap!";
+    let originInputString = document.getElementById("exampleFormControlTextarea1").value;
     let searchString = document.getElementById("searchWord").value;
     let numCharacters = parseInt(document.getElementById("numberCharacters").value);
 
