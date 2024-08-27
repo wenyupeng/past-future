@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+    <title>dKin Cap Processing</title>
+</head>
+
+<body>
+<header>
+    <div class="container-fluid bg-primary-subtle">
+        <div class="col-sm-8 mx-auto text-center py-5">
+            <h1 class="display-4">dKin Caps</h1>
+            <p class="lead ">A young and inspiring organisation whose
+                primary purpose is to bring you the highest quality headwear available.</p>
+        </div>
+    </div>
+</header>
+
+<main>
+    <div class="container">
+        <h3 class="mt-3">Javascript: Validate your form input data</h3>
+        <p>
+            Here is a simple form that is asking for some information from you. The fields are being checked to make
+            sure they are valid.
+            When you click the Submit button the data will be checked and relevant messages provided to you.
+        </p>
+        <form class="px-lg-4 py-lg-4">
+            <div class="row my-3">
+                <label for="name" class="col-sm-2 form-label">Name:</label>
+                <div class="col-sm-6">
+                    <input class="form-control" id="name">
+                </div>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+            </div>
+
+            <div class="row my-3">
+                <label for="ID" class="col-sm-2 form-label">ID:</label>
+                <div class="col-sm-6">
+                    <input class="form-control" id="ID">
+                </div>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+            </div>
+
+            <div class="row my-3">
+                <label for="email" class="col-sm-2 form-label">Email:</label>
+                <div class="col-sm-6">
+                    <input class="form-control" type="email" id="email">
+                </div>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+            </div>
+
+            <div class="row my-3">
+                <label for="deakinUnit" class="col-sm-2 form-label">Deakin Unit:</label>
+                <div class="col-sm-6">
+                    <input class="form-control" id="deakinUnit">
+                </div>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+            </div>
+
+            <div class="row my-3">
+                <label for="capType" class="col-sm-2 form-label">Cap Type:</label>
+                <div class="col-sm-6">
+                    <input class="form-control" id="capType">
+                </div>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="offset-sm-2 col-sm-10">
+                    <input class="btn btn-primary my-3 me-2" type="button" onclick="validateForm()"
+                           value="Process Form">
+                    <input class="btn btn-secondary my-3" type="reset" onclick="resetForm()" value="Reset Form">
+                </div>
+            </div>
+        </form>
+
+    </div>
+</main>
+
+
+<footer class="container-fluid text-center mt-4 p-2 bg-dark text-white">
+    <p>&copy; 2024 A webpage footer with important info!</p>
+</footer>
+
+
+<!-- Optional JavaScript -->
+<!-- Bootstrap Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+<script src="index.js"></script>
+</body>
+
+</html>
