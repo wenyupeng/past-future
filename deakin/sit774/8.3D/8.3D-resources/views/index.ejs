@@ -1,0 +1,48 @@
+<%- include('header'); -%>
+
+  <header>
+    <div class="container-fluid bg-primary-subtle">
+      <div class="col-sm-8 mx-auto text-center py-2">
+        <h1 class="display-4">dKin Caps</h1>
+        <p class="lead ">A young and inspiring organisation whose
+          primary purpose is to bring you the highest quality headwear available.</p>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="container">
+      <h3 class="mt-3">dKin Caps: Dynamic Cap Sales Data</h3>
+
+
+      <p>
+        Welcome to the <%= title %> website. You will find 
+          useful information and data on dKin Cap purchase data.
+      </p>
+      <p>
+        Please click on the links below to obtain some data either in raw JSON form
+        or as a rendered dynamic page.
+      </p>
+
+      <h6>JSON Data</h6>
+      <ul>
+        <li><a href="/captypes">Cap Types</a></li>
+        <li><a href="/colourtypes">Colour Types</a></li>
+        <li><a href="/stafflist">Staff List</a></li>
+        <li><a href="/transactions">Cap Sales Transactions</a></li>
+      </ul>
+
+      <h6>Dynamic Response Pages</h6>
+      <ul>
+        <li><a href="/sales">Sales</a></li>
+      </ul>
+
+      <p class="mt-5">
+        Thank you for visiting, this page was generated on
+        <% const now=new Date(); %>
+          <%= now.toLocaleString(); %>
+      </p>
+    </div>
+  </main>
+
+  <%- include('footer'); -%>
