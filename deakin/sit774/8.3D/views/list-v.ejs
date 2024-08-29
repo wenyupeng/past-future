@@ -1,0 +1,78 @@
+<%- include('header'); -%>
+    <header>
+        <div class="container-fluid bg-primary-subtle">
+            <div class="col-sm-8 mx-auto text-center py-2">
+                <h1 class="display-4">dKin Caps</h1>
+                <p class="lead ">A young and inspiring organisation whose
+                    primary purpose is to bring you the highest quality headwear available.</p>
+            </div>
+        </div>
+    </header>
+    <main>
+        <div class="container">
+            <h1>Purchases Made</h1>
+
+            <% transactions.forEach(function(transaction){ %>
+                <table class="table table-borderless border border-primary">
+                    <thead>
+                        <tr class="table-primary">
+                            <td class="col-4">Transaction #:</td>
+                            <td class="offset-col-4">Date/Time:</td>
+                            <td class="col-4">Salesperson:</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <%= transaction.tid %>
+                            </td>
+                            <td>
+                                <% var date=new Date(transaction.purchased).toLocaleDateString() %>
+                                    <% var time=new Date(transaction.purchased).toLocaleTimeString() %>
+                                        <%= date %> at <%= time %>
+                            </td>
+                            <td>
+                                <%= staff[transaction.staffid].abbrv %> (<%= staff[transaction.staffid].position %>)
+                            </td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="table-primary">
+                            <td class="col-2">Item ?:</td>
+                            <td class="offset-col-2">Description:</td>
+                            <td class="col-2">Price:</td>
+                        </tr>
+                        <% let count=1;totalPrice=0; %>
+                            <% transaction.items.forEach(function(item){ %>
+                                <% let cap=types[item.capid] %>
+                                    <% let color=colours[item.colour] %>
+                                        <tr>
+                                            <td scope="row">
+                                                <%= count %>
+                                            </td>
+                                            <td><b>
+                                                    <%= cap.name %>
+                                                </b>
+                                                (<%= cap.code %>, <em style="color:<%= color.value %> ;">
+                                                        <%= color.name%>
+                                                    </em>)<br>
+                                                    <%= cap.description %>
+                                            </td>
+                                            <td>
+                                                $<%= cap.price %>
+                                                    <% totalPrice +=parseFloat(cap.price) %>
+                                            </td>
+                                        </tr>
+                                        <% count++; }) %>
+                                            <tr>
+                                                <td></td>
+                                                <td></td>
+                                                <% totalPrice=Math.round(totalPrice*100)/100 %>
+                                                    <td><b>$<%= totalPrice.toFixed(2) %></b></td>
+                                            </tr>
+                    </tbody>
+                </table>
+                <br>
+                <% }); %>
+        </div>
+    </main>
+
+    <%- include('footer'); -%>
