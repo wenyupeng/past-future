@@ -1,0 +1,17 @@
+<%- include('header') -%>
+<main>
+    <div class="container">
+        <h1>Errors in form</h1>
+        <p>Sorry, there seems to be a problem with the data you supplied. Your form has a total of <%= msgCount %> errors.</p>
+        <h2>Error List:</h2>
+        <ol>
+            <% for(let i in errMsgs){ %>
+                <li>Error in field '<%= errMsgs[i].fieldName %>': <%= errMsgs[i].msg %></li>
+            <% } %>
+
+        </ol>
+        <a href="/">Click here to return to the feedback form</a>
+    </div>
+</main>
+
+<%- include('footer') -%>
