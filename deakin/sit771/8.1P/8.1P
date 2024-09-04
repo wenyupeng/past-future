@@ -1,0 +1,14 @@
+This program simulates trading, with the entry point being the Program class. Initially, the program creates accounts,
+then establishes a bank, and links the accounts to the bank. After that, all transactions are executed through the bank object.
+
+From the class diagram, we can see that DepositTransaction, WithdrawTransaction, and TransferTransaction all inherit
+from the Transaction class. The Transaction class acts as a template, allowing subclasses to inherit its properties,
+variables, and methods. Within Transaction, there is one abstract method and two virtual methods, which provide
+flexibility for subclasses to override and implement their specific logic. This design enhances the program's extensibility.
+
+Abstraction: The Transaction class is abstract, meaning it cannot be used to create objects directly, but all subclasses
+ inheriting from it must implement its abstract method. Abstraction elevates the program's extensibility to a higher level.
+
+Polymorphism: In the Bank class, when executing transactions, creating a separate method for each transaction type would
+ lead to code duplication. However, by defining the input parameter as the parent class and passing the subclass to it,
+ the code becomes more efficient and maintainable.
