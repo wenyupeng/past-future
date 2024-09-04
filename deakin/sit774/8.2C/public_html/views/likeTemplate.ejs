@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= color %></title>
+</head>
+<body>
+    <header></header>
+    <main>
+        <h1>Thank you for your <%= color.toUpperCase() %> vote!</h1>
+        <p><b>Vote subitted for the <%= color.replace(color[0],color[0].toUpperCase()) %> cap at <%= dateTime %></b></p>
+        <p>It is great you like <%= color %> cap!</p>
+        <p>There are a total of <b><%= likeyellow+likegrey%> </b> counted [YELLOW LIKES: <b> <%= likeyellow %> </b> and GREY LIKES: <b> <%= likegrey %> </b>] </p>
+        <p>Please call again soon!</p>
+        <a href="../index.html">Click here to return to main page</a>
+    </main>
+    <footer></footer>
+</body>
+</html>

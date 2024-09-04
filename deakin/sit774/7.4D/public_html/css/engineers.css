@@ -1,0 +1,16 @@
+.card {
+    width: 18rem;
+    height: 25rem;
+}
+
+.card-img-top {
+    height: 10rem;
+    object-fit: cover;
+}
+
+.card-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+}
