@@ -3,7 +3,7 @@ const morgan = require('morgan')
 const path = require('path')
 const { emit } = require('process')
 let sqlite3 = require('sqlite3').verbose()
-let db = new sqlite3.Database('10_1P')
+let db = new sqlite3.Database('10_2C')
 const port = 3000
 const app = express()
 app.use(express.static('public_html'))
@@ -12,11 +12,13 @@ app.use(morgan('common'))
 app.use(express.urlencoded({ extended: false }));
 app.set('views', path.join(__dirname, '\\public\\views'))
 app.set('view engine', 'ejs')
+
 app.get('/', (req, res) => {
     res.render('index', {
         title: 'dKin Membership'
     })
 })
+
 app.post('/submitmembership', (req, res) => {
     let body = req.body
     console.log(body)
@@ -30,6 +32,30 @@ app.post('/submitmembership', (req, res) => {
     })
     db.close
     res.status(200).render('/')
+})
+
+app.post('/search', (req, res) => {
+    let body = req.body
+    let searchTerm = body.searchTerm
+    let field = body.field
+    console.log(body)
+
+    db.all(`SELECT * FROM User WHERE ${field} LIKE '%${searchTerm.toLowerCase()}%'`, function (err, rows) {
+        if (err) {
+            return console.log('query failed, error msg: ', err.message)
+        } else {
+            console.log('query success.')
+            console.log(JSON.stringify(rows))
+            res.render('search', {
+                title: 'Ice Cream Review',
+                search: searchTerm,
+                field: field,
+                rows: rows
+            })
+        }
+    })
+
+    db.close
 })
 
 app.get('/membershipdetails', (req, res) => {
@@ -49,6 +75,7 @@ app.get('/membershipdetails', (req, res) => {
     })
     db.close;
 })
+
 app.use((req, res) => {
     res.render('404', {
         title: 'Ice Cream Review',

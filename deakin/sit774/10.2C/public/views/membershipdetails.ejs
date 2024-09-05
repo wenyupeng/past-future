@@ -1,0 +1,57 @@
+<%- include('header') -%>
+    <header>
+        <div class="container-fluid bg-primary-subtle">
+            <div class="col-sm-8 mx-auto text-center py-2">
+                <h1 class="display-4">dKin Caps</h1>
+                <p class="lead ">A young and inspiring organisation whose
+                    primary purpose is to bring you the highest quality headwear available.</p>
+            </div>
+        </div>
+    </header>
+    <main>
+        <div class="container">
+            <h3 class="mt-3">Membership List</h3>
+
+            <p>The table below lists all the registered members of the <b>dKin Caps</b> community. Accessing this data,
+                stored in a persistant database, is performed on the server.</p>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Firstname</th>
+                        <th>Surname</th>
+                        <th>Email</th>
+                        <th>Mobile#</th>
+                        <th>Cap Type</th>
+                        <th>Number of Caps</th>
+                        <th>Comment</th>
+                    </tr>
+                <tbody>
+                    <% if(rows == undefined || rows.length < 1){ %>
+                        <tr>
+                            <td colspan="8">List is empty</td>
+                        </tr>
+                        <% }else{ %>
+                            <% for(let i in rows){ %>
+                                <tr>
+                                    <td><%= rows[i].id %></td>
+                                    <td><%= rows[i].fname %></td>
+                                    <td><%= rows[i].sname %></td>
+                                    <td><%= rows[i].email %></td>
+                                    <td><%= rows[i].mobile %></td>
+                                    <td><%= rows[i].favourite %></td>
+                                    <td><%= rows[i].numcaps %></td>
+                                    <td><%= rows[i].comment %></td>
+                                </tr>
+                                <% } %>
+                                    <% } %>
+                </tbody>
+                </thead>
+            </table>
+            <a href="/">Click here to return to the feedback form.</a>
+        </div>
+
+    </main>
+
+
+    <%- include('footer') -%>

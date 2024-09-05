@@ -1,0 +1,43 @@
+<header class="container">
+    <div class="row justify-content-between align-items-center mt-5 mb-5 flex-nowrap">
+        <div class="col-auto">
+            <h1 class="display-5 fw-bold text-body-emphasis" style="white-space: nowrap;">Home Repair</h1>
+        </div>
+        <% if (!login) { %>
+            <div class="col-auto">
+                <div class="d-flex gap-3">
+                    <a class="btn btn-primary" href="/login">Login</a>
+                    <a class="btn btn-primary" href="/register">Register</a>
+                </div>
+            </div>
+            <% }else{ %>
+
+                <% } %>
+    </div>
+
+    <nav class="navbar sticky-top navbar-expand-lg rounded" aria-label="Thirteenth navbar example">
+        <div class="container-fluid">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample11"
+                aria-controls="navbarsExample11" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse d-lg-flex justify-content-center" id="navbarsExample11">
+                <ul class="navbar-nav col-lg-6 justify-content-lg-center">
+                    <li class="nav-item col-lg-3">
+                        <a class="nav-link active" aria-current="page" href="/introduction">Introduction</a>
+                    </li>
+                    <li class="nav-item col-lg-3">
+                        <a class="nav-link" href="/engineers">Engineers</a>
+                    </li>
+                    <li class="nav-item col-lg-3">
+                        <a class="nav-link" href="/homeIssues">Home Issues</a>
+                    </li>
+                    <li class="nav-item col-lg-3">
+                        <a class="nav-link" href="/news">News</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>

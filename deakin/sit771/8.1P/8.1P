@@ -12,3 +12,5 @@ Abstraction: The Transaction class is abstract, meaning it cannot be used to cre
 Polymorphism: In the Bank class, when executing transactions, creating a separate method for each transaction type would
  lead to code duplication. However, by defining the input parameter as the parent class and passing the subclass to it,
  the code becomes more efficient and maintainable.
+
+Combination mode

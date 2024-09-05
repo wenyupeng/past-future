@@ -1,0 +1,19 @@
+.card {
+    width: 18rem;
+    height: 25rem;
+}
+
+.card-img-top {
+    height: 10rem;
+    object-fit: cover;
+}
+
+.card-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    /* white-space: nowrap;       //禁止换行 */
+    overflow: hidden;          /* 超出部分隐藏 */
+    text-overflow: ellipsis;   /* 超出部分显示省略号 */
+}

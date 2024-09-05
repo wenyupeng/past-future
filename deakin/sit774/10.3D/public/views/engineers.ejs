@@ -1,0 +1,144 @@
+<%- include('start') -%>
+    <%- include('header') -%>
+    <main class="container">
+        <div class="mt-5 mb-4">
+            <div class="mb-4 gap-3">
+                <h1>Star Engineer</h1>
+                <div id="cardCarousel" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <div class="row justify-content-center">
+                                <div class="col-md-4">
+                                    <div class="card">
+                                        <img src="./img/star engineer1.png" class="card-img-top" alt="Card 1">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Sarah Chen</h5>
+                                            <p class="card-text">Sarah is a detail-oriented and customer-focused
+                                                electrician known for her exceptional problem-solving skills and
+                                                commitment to safety and quality.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="carousel-item">
+                            <div class="row justify-content-center">
+                                <div class="col-md-4">
+                                    <div class="card">
+                                        <img src="./img/star engineer2.png" class="card-img-top" alt="Card 2">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Emily Davis</h5>
+                                            <p class="card-text">Emily is a highly skilled and reliable electrician with
+                                                a strong focus on safety, precision, and delivering top-quality service
+                                                to her clients.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="carousel-item">
+                            <div class="row justify-content-center">
+                                <div class="col-md-4">
+                                    <div class="card">
+                                        <img src="./img/star engineer3.png" class="card-img-top" alt="Card 3">
+                                        <div class="card-body">
+                                            <h5 class="card-title">James Wilson</h5>
+                                            <p class="card-text">James is an experienced and dependable electrician,
+                                                known for his expertise in complex electrical systems, quick
+                                                problem-solving abilities, and a commitment to ensuring every job is
+                                                done efficiently and safely</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#cardCarousel"
+                        data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#cardCarousel"
+                        data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                </div>
+            </div>
+            <div class="row mb-4">
+                <div class="mb-4 row">
+                    <h1 class="col-9">Engineer List</h1>
+                    <input type="text" class="col-3 rounded" placeholder="input the description of the engineer">
+                </div>
+                <div class="mb-4 btn-group" role="group" aria-label="Basic example">
+                    <div class="btn-group col-3" role="group">
+                        <button type="button" class="btn text-info-emphasis text-bg-light border dropdown-toggle"
+                            data-bs-toggle="dropdown" aria-expanded="false">Type</button>
+                        <ul class="dropdown-menu w-100 text-center">
+                            <li><a class="dropdown-item" href="#">Electrician</a></li>
+                            <li><a class="dropdown-item" href="#">Carpenter</a></li>
+                        </ul>
+                    </div>
+                    <button type="button" class="btn text-info-emphasis text-bg-light border col-3">Area</button>
+                    <button type="button"
+                        class="btn text-info-emphasis text-bg-light border col-3">Saticification</button>
+                    <button type="button" class="btn text-info-emphasis text-bg-light border col-3">Price</button>
+                </div>
+                <div class="mb-4 col-lg-4 col-md-6 col-sm-10">
+                    <div class="card col-lg-6" style="width: 18rem;">
+                        <img src="./img/engineer list1.png" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <p class="card-text">Some quick example text to build on the card title and make up the bulk
+                                of
+                                the card's content.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-4 col-lg-4 col-md-6 col-sm-10">
+                    <div class="card" style="width: 18rem;">
+                        <img src="./img/engineer list2.png" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <p class="card-text">Some quick example text to build on the card title and make up the bulk
+                                of
+                                the card's content.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-4 col-lg-4 col-md-6 col-sm-10">
+                    <div class="card col-lg-6" style="width: 18rem;">
+                        <img src="./img/engineer list3.png" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <p class="card-text">Some quick example text to build on the card title and make up the bulk
+                                of
+                                the card's content.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-4 col-lg-4 col-md-6 col-sm-10">
+                    <div class="card col-lg-6" style="width: 18rem;">
+                        <img src="./img/engineer list4.png" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <p class="card-text">Some quick example text to build on the card title and make up the bulk
+                                of
+                                the card's content.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="offset-lg-5 offset-md-4 offset-sm-4 col-lg-4 col-md-4 col-sm-4">
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination">
+                            <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+                            <li class="page-item"><a class="page-link" href="#">1</a></li>
+                            <li class="page-item"><a class="page-link" href="#">2</a></li>
+                            <li class="page-item"><a class="page-link" href="#">3</a></li>
+                            <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </main>
+        <%- include('footer') -%>
+            <%- include('end') -%>
