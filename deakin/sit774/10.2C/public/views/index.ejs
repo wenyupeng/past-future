@@ -33,13 +33,13 @@
                             Firstname:
                         </label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" id="inputFirstname" name="firstname">
+                            <input type="text" class="form-control" id="inputFirstname"  name="firstname" >
                         </div>
                     </div>
                     <div class="row mb-3">
                         <label for="inputSurname" class="col-sm-2 pt-2 col-form-label-sm text-sm-end">Surname:</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" id="inputSurname" name="surname">
+                            <input type="text" class="form-control" id="inputSurname" name="surname" >
                         </div>
                     </div>
                     <div class="row mb-3">
@@ -47,7 +47,7 @@
                             Email:
                         </label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" id="inputEmail" name="email">
+                            <input type="text" class="form-control" id="inputEmail" name="email" >
                         </div>
                     </div>
                     <div class="row mb-3">
@@ -56,7 +56,7 @@
                         </label>
                         <div class="col-sm-10">
                             <input type="tel" class="form-control" id="inputMobile" name="mobileNumber"
-                                placeholder="04xxxxxxxx" title="Invalid Number 04xxxxxxxx" pattern="[0-9]{10}">
+                                placeholder="04xxxxxxxx" title="Invalid Number 04xxxxxxxx" pattern="[0-9]{10}" >
                         </div>
                     </div>
 
@@ -91,8 +91,7 @@
                     </div>
 
                     <div class="row mb-3">
-                        <legend class="col-form-label-sm col-sm-2 pt-0 text-sm-end" for="capstyles">Favourite Cap(s):
-                        </legend>
+                        <legend class="col-form-label-sm col-sm-2 pt-0 text-sm-end" for="capstyles">Favourite Cap(s):</legend>
                         <div class="col-sm-10">
                             <select class="form-select" id="capstyles" name="capstyle" aria-label="Select a cap style">
                                 <option disabled selected>Select a cap style...</option>
@@ -110,7 +109,7 @@
                         <div class="col-sm-10">
                             <!-- NOTE: No space between <textarea></textarea> tags! -->
                             <textarea rows="3" class="form-control" id="comments" name="comments"
-                                placeholder="Please provide a few words to describe your favourite cap..."></textarea>
+                                placeholder="Please provide a few words to describe your favourite cap..." ></textarea>
                         </div>
                     </div>
 
@@ -125,42 +124,6 @@
                     </div>
                 </form>
             </div>
-            <h5 class="mt-4">List Feedback</h5>
-            <p>
-                The following button will issue a <code>GET</code> request to the <code>/feedback</code>
-                route to retrieve feedback stored in the DB.
-            </p>
-            <div class="d-grid gap-5d-md-flex justify-content-md-center mb-4">
-                <a href="/membershipdetails">
-                    <button class="btn btn btn-success" id="getfeedbackBtn">
-                        Retrieve Membership Details From Database
-                    </button>
-                </a>
-            </div>
-
-            <h5 class="mt-4">Search Icecream Type</h5>
-            <p>The following button will issue a <span class="text-danger">POST</span> request to the <span
-                    class="text-danger">/search</span> route to retreive feedback on the ice cream type inputted</p>
-            <form action="/search" method="post">
-                <div class="mb-3">
-                    <label for="searchTerm" class="form-label">Search term</label>
-                    <input type="text" id="searchTerm" class="form-control" name="searchTerm"
-                        placeholder="Enter a term to search">
-                </div>
-                <div class="mb-3">
-                    <label for="field" class="form-label">Field</label>
-                    <select id="field" class="form-select" name="field">
-                        <option value="fname">Firstname</option>
-                        <option value="sname">Surname</option>
-                        <option value="email">Email</option>
-                        <option value="mobile">Mobile</option>
-                        <option value="numcaps">Cap Type</option>
-                        <option value="favourite">Number of Caps</option>
-                        <option value="comment">Comment</option>
-                    </select>
-                </div>
-                <button type="submit" class="btn btn-primary">Submit</button>
-            </form>
 
         </div>
     </main>
