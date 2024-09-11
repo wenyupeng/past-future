@@ -24,13 +24,18 @@ namespace _7_4H
 
                 if (SplashKit.IsGetRequestFor(request, "/login") || SplashKit.IsGetRequestFor(request, "/login.html"))
                 {
-
-                    SplashKit.SendResponse(request, "login successfully");
+                    SplashKit.SendResponse(request, "login.html");
+                }
+                else if (SplashKit.IsGetRequestFor(request, "/checkUser")){
+                    
                 }
                 else if (SplashKit.IsGetRequestFor(request, "/register") || SplashKit.IsGetRequestFor(request, "/register.html"))
                 {
 
                     SplashKit.SendResponse(request, "register successfully");
+                }
+                else if (SplashKit.IsGetRequestFor(request, "/addUser")){
+                    
                 }
                 else if (SplashKit.IsGetRequestFor(request, "/contact") || SplashKit.IsGetRequestFor(request, "/contact.html"))
                 {
