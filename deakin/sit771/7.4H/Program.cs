@@ -5,25 +5,57 @@ namespace _7_4H
 {
     public class Program
     {
+        private static Dictionary<string, string> _userMap = new Dictionary<string, string>();
         public static void Main()
         {
-            SplashKit.WriteLine("About to start the server...");
+            SplashKit.WriteLine("start the server...");
 
-            // Start a web server - defaults to listening to port 8080
             WebServer server = SplashKit.StartWebServer();
+            HttpRequest request;
 
             SplashKit.WriteLine("Waiting for a request - navigate to http://localhost:8080");
+            SplashKit.WriteLine("To end - navigate to http://localhost:8080/quit");
 
-            // Wait and get the first request that comes in
-            HttpRequest request = SplashKit.NextWebRequest(server);
+            request = SplashKit.NextWebRequest(server);
 
-            // Send back the index.html file
-            SplashKit.SendHtmlFileResponse(request, "index.html");
+            while (!SplashKit.IsGetRequestFor(request, "/quit"))
+            {
+                SplashKit.WriteLine("I got a request for " + SplashKit.RequestURI(request));
 
-            // For now, we are done, so let's shutdown
+                if (SplashKit.IsGetRequestFor(request, "/login") || SplashKit.IsGetRequestFor(request, "/login.html"))
+                {
+
+                    SplashKit.SendResponse(request, "login successfully");
+                }
+                else if (SplashKit.IsGetRequestFor(request, "/register") || SplashKit.IsGetRequestFor(request, "/register.html"))
+                {
+
+                    SplashKit.SendResponse(request, "register successfully");
+                }
+                else if (SplashKit.IsGetRequestFor(request, "/contact") || SplashKit.IsGetRequestFor(request, "/contact.html"))
+                {
+
+                    SplashKit.SendResponse(request, "contact.html");
+                }
+                else if (SplashKit.IsGetRequestFor(request, "/about") || SplashKit.IsGetRequestFor(request, "/about.html"))
+                {
+
+                    SplashKit.SendResponse(request, "about.html");
+                }
+                else
+                {
+                    SplashKit.SendHtmlFileResponse(request, "index.html");
+                }
+
+                SplashKit.WriteLine("Waiting for a request - navigate to http://localhost:8080");
+                SplashKit.WriteLine("To end - navigate to http://localhost:8080/quit");
+
+                // Get the next request that the server has
+                request = SplashKit.NextWebRequest(server);
+            }
+
+            SplashKit.WriteLine("About to stop the server...");
             SplashKit.StopWebServer(server);
-
-            SplashKit.ReadLine(); // Pause to keep the console window open
         }
     }
 }
