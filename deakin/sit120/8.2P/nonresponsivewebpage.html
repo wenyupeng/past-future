@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pet Shop</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .container {
+            width: 1200px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 10px 0;
+            text-align: center;
+        }
+        nav {
+            background-color: #444;
+            padding: 10px;
+        }
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+        }
+        nav ul li {
+            margin-right: 10px;
+        }
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            padding: 5px 10px;
+            display: inline-block;
+        }
+        .main-content {
+            margin: 20px 0;
+        }
+        .main-content img {
+            width: 60%;
+            display: block;
+        }
+        .section {
+            margin-bottom: 20px;
+        }
+        footer {
+            background-color: #333;
+            color: #fff;
+            padding: 10px 0;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Happy Paws Pet Shop</h1>
+        </header>
+        <nav>
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">About Us</a></li>
+                <li><a href="#">Our Pets</a></li>
+                <li><a href="#">Services</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+        </nav>
+        <div class="main-content">
+            <section class="section">
+                <h2>Welcome to Happy Paws Pet Shop</h2>
+                <p>Welcome to Happy Paws, your one-stop shop for all your pet needs! Whether you're looking for a new furry friend or supplies for your current pets, we have everything you need to keep your pets happy and healthy.</p>
+                Contact Us  <button onclick="document.getElementById('contact').scrollIntoView();" style="padding: 10px 20px; background-color: blue; color: white; border: none; cursor: pointer;">Click</button>
+                <img src="https://plus.unsplash.com/premium_photo-1661503280224-a86d7ad2a574?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Happy Paws Pet Shop">
+            </section>
+            <section class="section">
+                <h2>About Us</h2>
+                <p>At Happy Paws, we are passionate about pets and dedicated to providing the best products and services for your beloved animals. Our experienced team is here to help you find the perfect pet and offer expert advice on pet care.</p>
+                <img src="https://images.unsplash.com/photo-1560807707-8cc77767d783" alt="Dog">
+            </section>
+            <section class="section">
+                <h2>Our Pets</h2>
+                <p>We offer a wide variety of pets, from playful puppies and kittens to exotic birds and reptiles. All our pets are well-cared for and ready to find their forever homes.</p>
+                <ul>
+                    <li>Dogs: Labrador Retrievers, Beagles, and more.</li>
+                    <li>Cats: Maine Coons, Siamese, and more.</li>
+                    <li>Birds: Parrots, Canaries, and more.</li>
+                    <li>Reptiles: Geckos, Turtles, and more.</li>
+                </ul>
+                <img src="https://images.unsplash.com/photo-1519612535780-b5d7d96c36f3" alt="Dogs">
+            </section>
+            <section class="section">
+                <h2>Services</h2>
+                <p>In addition to our wide selection of pets, we also offer grooming, training, and veterinary services to ensure your pets receive the best care possible.</p>
+                <ul>
+                    <li>Pet Grooming: Bathing, trimming, and more.</li>
+                    <li>Training: Obedience training and behavioral classes.</li>
+                    <li>Veterinary Services: Check-ups, vaccinations, and more.</li>
+                </ul>
+                <img src="https://images.unsplash.com/photo-1592194996308-7b43878e84a6" alt="Services">
+            </section>
+            <section class="section" id="contact">
+                <h2>Contact Us</h2>
+                <p>Have questions or need assistance? Feel free to reach out to us through the contact details below. Our friendly staff is here to help!</p>
+                <address>
+                    <p>Email: info@happypaws.com</p>
+                    <p>Phone: (123) 456-7890</p>
+                    <p>Address: 123 Pet Lane, Pet City, PC 45678</p>
+                </address>
+            </section>
+        </div>
+        <footer>
+            <p>&copy; 2024 Happy Paws Pet Shop. All rights reserved.</p>
+        </footer>
+    </div>
+</body>
+</html>
