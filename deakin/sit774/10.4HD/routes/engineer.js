@@ -38,12 +38,10 @@ router.get('/', async (req, res) => {
     try {
         let result = await dbGet('SELECT COUNT(1) AS totalNum FROM Engineer', [])
         totalPages = Math.ceil(result.totalNum / 4)
-        console.log(result)
+
         let stars = await dbAll('SELECT * FROM Engineer e ORDER BY price DESC LIMIT 3 OFFSET 0', [])
 
-        console.log(queryStr)
         let engineers = await dbAll(queryStr, params)
-        console.log(engineers)
         res.render('engineers', {
             stars: stars,
             engineers: engineers,

@@ -1,5 +1,6 @@
 <%- include('start') -%>
     <%- include('header') -%>
+        <link rel="stylesheet" href="../css/engineers.css">
         <main class="container">
             <div class="mt-5 mb-4">
                 <div class="mb-4 gap-3">
@@ -12,10 +13,12 @@
                                     <div class="row justify-content-center">
                                         <div class="col-md-4">
                                             <div class="card">
-                                                <img src= '<%= e.imgurl%>' class="card-img-top" alt="Card 1">
+                                                <img src='<%= e.imgurl%>' class="card-img-top" alt="Card 1">
                                                 <div class="card-body">
                                                     <h5 class="card-title">Sarah Chen</h5>
-                                                    <p class="card-text"><%= e.description%></p>
+                                                    <p class="card-text">
+                                                        <%= e.description%>
+                                                    </p>
                                                 </div>
                                             </div>
                                         </div>
@@ -49,10 +52,12 @@
                                 <li><a class="dropdown-item" href="?type=carpenter">Carpenter</a></li>
                             </ul>
                         </div>
-                        <a type="button" class="btn text-info-emphasis text-bg-light border col-3" href="?field=area">Area</a>
-                        <a type="button"
-                            class="btn text-info-emphasis text-bg-light border col-3" href="?field=price">Saticification</a>
-                        <a type="button" class="btn text-info-emphasis text-bg-light border col-3" href="?field=price">Price</a>
+                        <a type="button" class="btn text-info-emphasis text-bg-light border col-3"
+                            href="?field=area">Area</a>
+                        <a type="button" class="btn text-info-emphasis text-bg-light border col-3"
+                            href="?field=price">Saticification</a>
+                        <a type="button" class="btn text-info-emphasis text-bg-light border col-3"
+                            href="?field=price">Price</a>
                     </div>
 
 
@@ -62,11 +67,13 @@
                             <div class="card col-lg-6" style="width: 18rem;">
                                 <img src='<%= e.imgurl%>' class="card-img-top" alt="...">
                                 <div class="card-body">
-                                    <p class="card-text"><%= e.description%></p>
-                                    </div>
+                                    <p class="card-text">
+                                        <%= e.description%>
+                                    </p>
                                 </div>
                             </div>
-                            <%}) %>
+                        </div>
+                        <%}) %>
                 </div>
                 <div class="row">
                     <div class="offset-lg-5 offset-md-4 offset-sm-4 col-lg-4 col-md-4 col-sm-4">
@@ -75,21 +82,20 @@
                                 <a class="page-link" href="?page=<%= parseInt(currentPage) - 1 %>">Previous</a>
                             </li>
 
-                            <% for (let i = parseInt(currentPage); i <= parseInt(totalPages) && i <= (parseInt(currentPage) + 5); i++) { %>
+                            <% for (let i=1; i <=parseInt(totalPages) && i <=(parseInt(currentPage) + 5); i++) { %>
                                 <li class="page-item <%= i === parseInt(currentPage) ? 'active' : '' %>">
                                     <a class="page-link" href="?page=<%= i %>">
                                         <%= i %>
                                     </a>
                                 </li>
-                            <% } %>
+                                <% } %>
 
-                            <li
-                                    class="page-item <%= parseInt(currentPage) === parseInt(totalPages) ? 'disabled' : '' %>">
-                                <a class="page-link"
-                                   href="?page=<%= parseInt(currentPage) + 1 %>">Next</a>
-                            </li>
-                        </ul>
-                        </nav>
+                                    <li
+                                        class="page-item <%= parseInt(currentPage) === parseInt(totalPages) ? 'disabled' : '' %>">
+                                        <a class="page-link" href="?page=<%= parseInt(currentPage) + 1 %>">Next</a>
+                                    </li>
+                                    </ul>
+                                    </nav>
                     </div>
                 </div>
             </div>
