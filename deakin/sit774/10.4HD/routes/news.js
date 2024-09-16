@@ -5,7 +5,11 @@ const router = express.Router()
 
 
 router.get('/', async (req, res, next) => {
-    let db = new sqlite3.Database('10_3D')
+    let login =false
+    if(req.session.user){
+        login =true
+    }
+    let db = new sqlite3.Database('10_4HD')
     let dbGet = util.promisify(db.get).bind(db)
     let dbAll = util.promisify(db.all).bind(db)
 
@@ -20,7 +24,7 @@ router.get('/', async (req, res, next) => {
             news: rows,
             currentPage: pageNo,
             totalPages: totalPages,
-            login: false
+            login: login
         })
     } catch (err) {
         console.err('err: ', err.message)

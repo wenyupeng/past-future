@@ -1,0 +1,118 @@
+<%- include('start') -%>
+    <header class="container">
+        <div class="row text-center mt-5 mb-5">
+            <div class="offset-sm-2 col-sm-8 col-md-8 col-lg-8">
+                <h1 class="display-5 fw-bold text-body-emphasis">Home Repair</h1>
+            </div>
+        </div>
+    </header>
+    <main>
+        <div class="offset-2 col-8">
+            <div class="col-lg-6 col-xxl-4 my-5 mx-auto">
+                <div class="row gap-2">
+                    <a class="col btn btn-primary" href="/introduction">Home</a>
+                    <a class="col btn btn-primary" href="/register">register</a>
+                </div>
+            </div>
+            <form id="loginForm" class="needs-validation" novalidate>
+                <div class="row my-5">
+                    <label for="emailOrPhone" class="form-label">Email address/Phone</label>
+                    <input type="text" class="form-control" id="emailOrPhone" aria-describedby="userInputHelp"
+                        placeholder="We'll never share your email/phone with anyone else." onfocus="clearTips('login')"
+                        required>
+                    <div class="valid-feedback">
+                        Looks good!
+                    </div>
+                    <div class="invalid-feedback">
+                        Please input an email or a phone
+                    </div>
+                </div>
+                <div class="row my-5">
+                    <label for="password" class="form-label">Password</label>
+                    <input type="password" class="form-control" onfocus="clearTips('pwd')" id="password">
+                    <div class="valid-feedback">
+                        Looks good!
+                    </div>
+                    <div class="invalid-feedback">
+                        Please input your password!
+                    </div>
+                </div>
+                <div class="row gap-3">
+                    <button type="button" class="col btn btn-primary" onclick="login()">Submit</button>
+                    <button class="col btn btn-info" onclick="reset()">Reset</button>
+                </div>
+            </form>
+        </div>
+    </main>
+    </body>
+
+    <script>
+        function validateField(fieldTag) {
+            fieldTag.classList.remove("is-valid", "is-invalid");
+
+            if (!fieldTag.value.trim()) {
+                fieldTag.classList.add("is-invalid");
+            } else {
+                fieldTag.classList.add("is-valid");
+            }
+        }
+
+        function login() {
+            let usernameTag = document.getElementById('emailOrPhone')
+            let pwdTag = document.getElementById('password')
+
+            validateField(usernameTag);
+            validateField(pwdTag);
+
+            let user = {
+                name: usernameTag.value,
+                password: pwdTag.value
+            }
+
+            fetch('/login/checkUser', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(user)
+            })
+                .then(res => {
+                    if (!res.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return res.json()
+                })
+                .then(data => {
+                    sessionStorage.setItem('userData', JSON.stringify(data))
+                    window.location.href = '/introduction'
+                })
+                .catch(err => {
+                    if (err) {
+                        console.log(err.msg)
+                    }
+                    console.log('err: ', err)
+                })
+        }
+
+        function clearTips(methond) {
+            let usernameTag = document.getElementById('emailOrPhone')
+            let pwdTag = document.getElementById('password')
+            if ('login' == methond) {
+                usernameTag.classList.remove("is-valid", "is-invalid");
+            } else {
+                pwdTag.classList.remove("is-valid", "is-invalid");
+            }
+        }
+
+        function reset() {
+            let usernameTag = document.getElementById('emailOrPhone')
+            let pwdTag = document.getElementById('password')
+
+            usernameTag.classList.remove("is-valid", "is-invalid");
+            pwdTag.classList.remove("is-valid", "is-invalid");
+
+            usernameTag.value = ''
+            pwdTag.value = ''
+        }
+    </script>
+    <%- include('end') -%>
