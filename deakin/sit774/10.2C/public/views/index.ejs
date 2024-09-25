@@ -124,6 +124,42 @@
                     </div>
                 </form>
             </div>
+            <h5 class="mt-4">List Feedback</h5>
+            <p>
+                The following button will issue a <code>GET</code> request to the <code>/feedback</code>
+                route to retrieve feedback stored in the DB.
+            </p>
+            <div class="d-grid gap-5d-md-flex justify-content-md-center mb-4">
+                <a href="/membershipdetails">
+                    <button class="btn btn btn-success" id="getfeedbackBtn">
+                        Retrieve Membership Details From Database
+                    </button>
+                </a>
+            </div>
+
+            <h5 class="mt-4">Search Icecream Type</h5>
+            <p>The following button will issue a <span class="text-danger">POST</span> request to the <span
+                        class="text-danger">/search</span> route to retreive feedback on the ice cream type inputted</p>
+            <form action="/search" method="post">
+                <div class="mb-3">
+                    <label for="searchTerm" class="form-label">Search term</label>
+                    <input type="text" id="searchTerm" class="form-control" name="searchTerm"
+                           placeholder="Enter a term to search">
+                </div>
+                <div class="mb-3">
+                    <label for="field" class="form-label">Field</label>
+                    <select id="field" class="form-select" name="field">
+                        <option value="fname">Firstname</option>
+                        <option value="sname">Surname</option>
+                        <option value="email">Email</option>
+                        <option value="mobile">Mobile</option>
+                        <option value="numcaps">Cap Type</option>
+                        <option value="favourite">Number of Caps</option>
+                        <option value="comment">Comment</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
 
         </div>
     </main>
