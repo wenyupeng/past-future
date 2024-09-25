@@ -10,7 +10,7 @@ app.use(express.static('public_html'))
 app.use(morgan('common'))
 //configuring express to use body-parser as middle-ware.
 app.use(express.urlencoded({ extended: false }));
-app.set('views', path.join(__dirname, '\\public\\views'))
+app.set('views', path.join(__dirname, 'public/views'))
 app.set('view engine', 'ejs')
 
 app.get('/', (req, res) => {
@@ -32,6 +32,12 @@ app.post('/submitmembership', (req, res) => {
     })
     db.close
     res.status(200).render('/')
+})
+
+app.get('/search', (req, res) => {
+    res.render('search', {
+        title: 'dKin Membership'
+    })
 })
 
 app.post('/search', (req, res) => {
