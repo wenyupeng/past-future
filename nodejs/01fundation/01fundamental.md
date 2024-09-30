@@ -293,3 +293,124 @@ setTimeout(function() {
     event.emit('some_event'); 
 }, 1000);
 ```
+
+EventEmitter 的每个事件由一个事件名和若干个参数组成，事件名是一个字符串，通常表达一定的语义。对于每个事件，EventEmitter 支持 若干个事件监听器。
+当事件触发时，注册到这个事件的事件监听器被依次调用，事件参数作为回调函数参数传递。
+EventEmitter 提供了多个属性，如 on 和 emit。on 函数用于绑定事件函数，emit 属性用于触发一个事件。接下来我们来具体看下 EventEmitter 的属性介绍。
+```js
+//event.js 文件
+var events = require('events'); 
+var emitter = new events.EventEmitter(); 
+emitter.on('someEvent', function(arg1, arg2) { 
+    console.log('listener1', arg1, arg2); 
+}); 
+emitter.on('someEvent', function(arg1, arg2) { 
+    console.log('listener2', arg1, arg2); 
+}); 
+emitter.emit('someEvent', 'arg1 参数', 'arg2 参数');
+```
+
+---
+方法
+addListener(event, listener) 为指定事件添加一个监听器到监听器数组的尾部。
+on(event, listener) 为指定事件注册一个监听器，接受一个字符串 event 和一个回调函数。
+```js
+server.on('connection', function (stream) {
+  console.log('someone connected!');
+});
+```
+once(event, listener) 为指定事件注册一个单次监听器，即 监听器最多只会触发一次，触发后立刻解除该监听器。
+```js
+server.once('connection', function (stream) {
+  console.log('Ah, we have our first user!');
+});
+```
+removeListener(event, listener) 移除指定事件的某个监听器，监听器必须是该事件已经注册过的监听器。它接受两个参数，第一个是事件名称，第二个是回调函数名称。
+```js
+var callback = function(stream) {
+  console.log('someone connected!');
+};
+server.on('connection', callback);
+// ...
+server.removeListener('connection', callback);
+```
+
+removeAllListeners([event]) 移除所有事件的所有监听器， 如果指定事件，则移除指定事件的所有监听器。
+setMaxListeners(n) 默认情况下， EventEmitters 如果你添加的监听器超过 10 个就会输出警告信息。 setMaxListeners 函数用于改变监听器的默认限制的数量。
+listeners(event) 返回指定事件的监听器数组。
+emit(event, [arg1], [arg2], [...]) 按监听器的顺序执行执行每个监听器，如果事件有注册监听返回 true，否则返回 false。
+
+--- 
+类方法
+listenerCount(emitter, event) 返回指定事件的监听器数量。
+```js
+events.EventEmitter.listenerCount(emitter, eventName) //已废弃，不推荐
+events.emitter.listenerCount(eventName) //推荐
+```
+
+---
+事件
+newListener event - 字符串，事件名称 listener - 处理事件函数
+该事件在添加新监听器时被触发。
+
+removeListener event - 字符串，事件名称 listener - 处理事件函数
+从指定监听器数组中删除一个监听器。需要注意的是，此操作将会改变处于被删监听器之后的那些监听器的索引。
+
+---
+error 事件
+EventEmitter 定义了一个特殊的事件 error，它包含了错误的语义，在遇到 异常的时候通常会触发 error 事件。
+当 error 被触发时，EventEmitter 规定如果没有响 应的监听器，Node.js 会把它当作异常，退出程序并输出错误信息。
+一般要为会触发 error 事件的对象设置监听器，避免遇到错误后整个程序崩溃。例如：
+```js
+var events = require('events'); 
+var emitter = new events.EventEmitter(); 
+emitter.emit('error');
+```
+
+---
+继承 EventEmitter
+常用的方式不是直接使用EventEmitter, 而是在对象中继承它。包括 fs、net、 http 在内的，只要是支持事件响应的核心模块都是 EventEmitter 的子类。
+原因有两点：
+首先，具有某个实体功能的对象实现事件符合语义， 事件的监听和发生应该是一个对象的方法。
+其次 JavaScript 的对象机制是基于原型的，支持 部分多重继承，继承 EventEmitter 不会打乱对象原有的继承关系。
+
+
+---
+Node.js Buffer(缓冲区)
+JavaScript 语言自身只有字符串数据类型，没有二进制数据类型。但在处理像TCP流或文件流时，必须使用到二进制数据。因此在 Node.js中，定义了一个 Buffer 类，该类用来创建一个专门存放二进制数据的缓存区。
+在 Node.js 中，Buffer 类是随 Node 内核一起发布的核心库。Buffer 库为 Node.js 带来了一种存储原始数据的方法，可以让 Node.js 处理二进制数据，每当需要在 Node.js 中处理I/O操作中移动的数据时，就有可能使用 Buffer 库。原始数据存储在 Buffer 类的实例中。一个 Buffer 类似于一个整数数组，但它对应于 V8 堆内存之外的一块原始内存。
+
+> 在v6.0之前创建Buffer对象直接使用new Buffer()构造函数来创建对象实例，但是Buffer对内存的权限操作相比很大，可以直接捕获一些敏感信息，所以在v6.0以后，官方文档里面建议使用 Buffer.from() 接口去创建Buffer对象。
+
+Buffer 与字符编码
+Buffer 实例一般用于表示编码字符的序列，比如 UTF-8 、 UCS2 、 Base64 、或十六进制编码的数据。 通过使用显式的字符编码，就可以在 Buffer 实例与普通的 JavaScript 字符串之间进行相互转换。
+
+```js
+const buf = Buffer.from('runoob', 'ascii');
+
+// 输出 72756e6f6f62
+console.log(buf.toString('hex'));
+
+// 输出 cnVub29i
+console.log(buf.toString('base64'));
+```
+
+Node.js 目前支持的字符编码包括：
+- ascii - 仅支持 7 位 ASCII 数据。如果设置去掉高位的话，这种编码是非常快的。
+- utf8 - 多字节编码的 Unicode 字符。许多网页和其他文档格式都使用 UTF-8 。
+- utf16le - 2 或 4 个字节，小字节序编码的 Unicode 字符。支持代理对（U+10000 至 U+10FFFF）。
+- ucs2 - utf16le 的别名。
+- base64 - Base64 编码。
+- latin1 - 一种把 Buffer 编码成一字节编码的字符串的方式。
+- binary - latin1 的别名。
+- hex - 将每个字节编码为两个十六进制字符。
+
+---
+创建 Buffer 类
+Buffer.alloc(size[, fill[, encoding]])： 返回一个指定大小的 Buffer 实例，如果没有设置 fill，则默认填满 0
+Buffer.allocUnsafe(size)： 返回一个指定大小的 Buffer 实例，但是它不会被初始化，所以它可能包含敏感的数据
+Buffer.allocUnsafeSlow(size)
+Buffer.from(array)： 返回一个被 array 的值初始化的新的 Buffer 实例（传入的 array 的元素只能是数字，不然就会自动被 0 覆盖）
+Buffer.from(arrayBuffer[, byteOffset[, length]])： 返回一个新建的与给定的 ArrayBuffer 共享同一内存的 Buffer。
+Buffer.from(buffer)： 复制传入的 Buffer 实例的数据，并返回一个新的 Buffer 实例
+Buffer.from(string[, encoding])： 返回一个被 string 的值初始化的新的 Buffer 实例
