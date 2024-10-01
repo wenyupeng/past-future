@@ -1033,6 +1033,653 @@ util.inherits
 util.inherits(constructor, superConstructor) 是一个实现对象间原型继承的函数。
 
 JavaScript 的面向对象特性是基于原型的，与常见的基于类的不同。JavaScript 没有提供对象继承的语言级别特性，而是通过原型复制来实现的。
+```js
+var util = require('util'); 
+function Base() { 
+    this.name = 'base'; 
+    this.base = 1991; 
+    this.sayHello = function() { 
+    console.log('Hello ' + this.name); 
+    }; 
+} 
+Base.prototype.showName = function() { 
+    console.log(this.name);
+}; 
+function Sub() { 
+    this.name = 'sub'; 
+} 
+util.inherits(Sub, Base); 
+var objBase = new Base(); 
+objBase.showName(); 
+objBase.sayHello(); 
+console.log(objBase); 
+var objSub = new Sub(); 
+objSub.showName(); 
+//objSub.sayHello(); 
+console.log(objSub);
+// 注意：Sub 仅仅继承了Base 在原型中定义的函数，而构造函数内部创造的 base 属 性和 sayHello 函数都没有被 Sub 继承。
+```
+新版本中 util.inhrits 废弃后的写法，直接继承即可：
+```js
+const util = require('util');
+
+async function fun() {
+    return "hello world";
+}
+
+const callbackFunction = util.callbackify(fun);
+callbackFunction((err, ret) => {
+    if (err) throw err;
+    console.log(ret);
+})
+
+class Base{
+    name = 'base';
+    base = 1991;
+    sayHello = function() {
+        console.log('Hello ' + this.name);
+    }
+}
+
+Base.prototype.showName = function() {
+    console.log(this.name);
+}
+
+class Sub extends Base {
+    name = 'sub';
+}
+
+var objBase = new Base();
+objBase.showName();
+objBase.sayHello();
+console.log(objBase);
+var objSub = new Sub();
+objSub.showName();
+objSub.sayHello();
+console.log(objSub);
+```
+
+util.inspect
+util.inspect(object,[showHidden],[depth],[colors]) 是一个将任意对象转换 为字符串的方法，通常用于调试和错误输出。它至少接受一个参数 object，即要转换的对象。
+showHidden 是一个可选参数，如果值为 true，将会输出更多隐藏信息。
+depth 表示最大递归的层数，如果对象很复杂，你可以指定层数以控制输出信息的多 少。如果不指定depth，默认会递归 2 层，指定为 null 表示将不限递归层数完整遍历对象。 如果 colors 值为 true，输出格式将会以 ANSI 颜色编码，通常用于在终端显示更漂亮 的效果。
+特别要指出的是，util.inspect 并不会简单地直接把对象转换为字符串，即使该对 象定义了 toString 方法也不会调用。
+```js
+var util = require('util'); 
+function Person() { 
+    this.name = 'byvoid'; 
+    this.toString = function() { 
+    return this.name; 
+    }; 
+} 
+var obj = new Person(); 
+console.log(util.inspect(obj)); 
+console.log(util.inspect(obj, true));
+```
+
+util.isArray(object)
+如果给定的参数 "object" 是一个数组返回 true，否则返回 false。
+```js
+var util = require('util');
+
+util.isArray([])
+  // true
+util.isArray(new Array)
+  // true
+util.isArray({})
+  // false
+```
+
+util.isRegExp(object)
+如果给定的参数 "object" 是一个正则表达式返回true，否则返回false。
+```js
+var util = require('util');
+
+util.isRegExp(/some regexp/)
+  // true
+util.isRegExp(new RegExp('another regexp'))
+  // true
+util.isRegExp({})
+  // false
+```
+
+util.isDate(object)
+如果给定的参数 "object" 是一个日期返回true，否则返回false。
+```js
+var util = require('util');
+
+util.isDate(new Date())
+  // true
+util.isDate(Date())
+  // false (without 'new' returns a String)
+util.isDate({})
+  // false
+```
+
+---
+Node.js 文件系统
+Node.js 提供一组类似 UNIX（POSIX）标准的文件操作API。
+```js
+var fs = require("fs")
+```
+
+异步和同步
+Node.js 文件系统（fs 模块）模块中的方法均有异步和同步版本，例如读取文件内容的函数有异步的 fs.readFile() 和同步的 fs.readFileSync()。
+异步的方法函数最后一个参数为回调函数，回调函数的第一个参数包含了错误信息(error)。
+建议大家使用异步方法，比起同步，异步方法性能更高，速度更快，而且没有阻塞。
+```js
+var fs = require("fs");
+
+// 异步读取
+fs.readFile('input.txt', function (err, data) {
+   if (err) {
+       return console.error(err);
+   }
+   console.log("异步读取: " + data.toString());
+});
+
+// 同步读取
+var data = fs.readFileSync('input.txt');
+console.log("同步读取: " + data.toString());
+
+console.log("程序执行完毕。");
+```
+
+打开文件
+fs.open(path, flags[, mode], callback)
+- path - 文件的路径。
+- flags - 文件打开的行为。具体值详见下文。
+- mode - 设置文件模式(权限)，文件创建默认权限为 0666(可读，可写)。
+- callback - 回调函数，带有两个参数如：callback(err, fd)。
+
+flags 参数
+
+| Flag | 描述                                     |
+|------|----------------------------------------|
+| r	   | 以只读模式打开文件。文件必须存在。如果文件不存在，会抛出异常         |
+| r+	  | 以读写模式打开文件。文件必须存在。                      |
+| rs	  | 以同步方式只读打开文件。阻塞操作，但在某些操作系统上可能会提供更好的稳定性。 |
+| rs+	 | 以同步方式读写打开文件。阻塞操作，但在某些操作系统上可能会提供更好的稳定性。 |
+| w	   | 以只写模式打开文件。如果文件不存在则创建文件，如果文件存在则截断文件。    |
+| wx	  | 类似于 'w'，但如果路径存在，则失败。                   |
+| w+	  | 以读写模式打开文件。如果文件不存在则创建文件，如果文件存在则截断文件。    |
+| wx+	 | 类似于 'w+'，但如果路径存在，则失败。                  |
+| a	   | 以追加模式打开文件。如果文件不存在则创建文件。                |
+| ax	  | 类似于 'a'，但如果路径存在，则失败。                   |
+| a+	  | 以读取和追加模式打开文件。如果文件不存在则创建文件。             |
+| ax+	 | 类似于 'a+'，但如果路径存在，则失败。                  |
+
+```js
+var fs = require("fs");
+
+// 异步打开文件
+console.log("准备打开文件！");
+fs.open('input.txt', 'r+', function(err, fd) {
+   if (err) {
+       return console.error(err);
+   }
+  console.log("文件打开成功！");     
+});
+```
+
+获取文件信息
+fs.stat(path, callback)
+- path - 文件路径。
+- callback - 回调函数，带有两个参数如：(err, stats), stats 是 fs.Stats 对象。
+
+fs.stat(path)执行后，会将stats类的实例返回给其回调函数。可以通过stats类中的提供方法判断文件的相关属性。例如判断是否为文件：
+```js
+var fs = require('fs');
+
+fs.stat('/Users/liuht/code/itbilu/demo/fs.js', function (err, stats) {
+    console.log(stats.isFile());         //true
+})
+```
+
+| 方法                         | 描述                                                 |
+|----------------------------|----------------------------------------------------|
+| stats.isFile()	            | 如果是文件返回 true，否则返回 false。                           |
+| stats.isDirectory()	       | 如果是目录返回 true，否则返回 false。                           |
+| stats.isBlockDevice()	     | 如果是块设备返回 true，否则返回 false。                          |
+| stats.isCharacterDevice()	 | 如果是字符设备返回 true，否则返回 false。                         |
+| stats.isSymbolicLink()	    | 如果是软链接返回 true，否则返回 false。                          |
+| stats.isFIFO()             | 	如果是FIFO，返回true，否则返回 false。FIFO是UNIX中的一种特殊类型的命令管道。 |
+| stats.isSocket()	          | 如果是 Socket 返回 true，否则返回 false。                     |
+
+```js
+var fs = require("fs");
+
+console.log("准备打开文件！");
+fs.stat('input.txt', function (err, stats) {
+   if (err) {
+       return console.error(err);
+   }
+   console.log(stats);
+   console.log("读取文件信息成功！");
+   
+   // 检测文件类型
+   console.log("是否为文件(isFile) ? " + stats.isFile());
+   console.log("是否为目录(isDirectory) ? " + stats.isDirectory());    
+});
+```
+
+写入文件
+fs.writeFile(file, data[, options], callback)
+writeFile 直接打开文件默认是 w 模式，所以如果文件存在，该方法写入的内容会覆盖旧的文件内容。
+- file - 文件名或文件描述符。
+- data - 要写入文件的数据，可以是 String(字符串) 或 Buffer(缓冲) 对象。
+- options - 该参数是一个对象，包含 {encoding, mode, flag}。默认编码为 utf8, 模式为 0666 ， flag 为 'w'
+- callback - 回调函数，回调函数只包含错误信息参数(err)，在写入失败时返回。
+
+```js
+var fs = require("fs");
+
+console.log("准备写入文件");
+fs.writeFile('input.txt', '我是通 过fs.writeFile 写入文件的内容',  function(err) {
+   if (err) {
+       return console.error(err);
+   }
+   console.log("数据写入成功！");
+   console.log("--------我是分割线-------------")
+   console.log("读取写入的数据！");
+   fs.readFile('input.txt', function (err, data) {
+      if (err) {
+         return console.error(err);
+      }
+      console.log("异步读取文件数据: " + data.toString());
+   });
+});
+```
+
+读取文件
+fs.read(fd, buffer, offset, length, position, callback)
+- fd - 通过 fs.open() 方法返回的文件描述符。
+- buffer - 数据写入的缓冲区。
+- offset - 缓冲区写入的写入偏移量。
+- length - 要从文件中读取的字节数。
+- position - 文件读取的起始位置，如果 position 的值为 null，则会从当前文件指针的位置读取。
+- callback - 回调函数，有三个参数err, bytesRead, buffer，err 为错误信息， bytesRead 表示读取的字节数，buffer 为缓冲区对
+
+```js
+var fs = require("fs");
+var buf = new Buffer.alloc(1024);
+
+console.log("准备打开已存在的文件！");
+fs.open('input.txt', 'r+', function(err, fd) {
+   if (err) {
+       return console.error(err);
+   }
+   console.log("文件打开成功！");
+   console.log("准备读取文件：");
+   fs.read(fd, buf, 0, buf.length, 0, function(err, bytes){
+      if (err){
+         console.log(err);
+      }
+      console.log(bytes + "  字节被读取");
+      
+      // 仅输出读取的字节
+      if(bytes > 0){
+         console.log(buf.slice(0, bytes).toString());
+      }
+   });
+});
+```
+
+关闭文件
+fs.close(fd, callback)
+- fd - 通过 fs.open() 方法返回的文件描述符。
+- callback - 回调函数，没有参数。
+```js
+var fs = require("fs");
+var buf = new Buffer.alloc(1024);
+
+console.log("准备打开文件！");
+fs.open('input.txt', 'r+', function(err, fd) {
+   if (err) {
+       return console.error(err);
+   }
+   console.log("文件打开成功！");
+   console.log("准备读取文件！");
+   fs.read(fd, buf, 0, buf.length, 0, function(err, bytes){
+      if (err){
+         console.log(err);
+      }
+
+      // 仅输出读取的字节
+      if(bytes > 0){
+         console.log(buf.slice(0, bytes).toString());
+      }
+
+      // 关闭文件
+      fs.close(fd, function(err){
+         if (err){
+            console.log(err);
+         } 
+         console.log("文件关闭成功");
+      });
+   });
+});
+```
+
+截取文件
+fs.ftruncate(fd, len, callback)
+- fd - 通过 fs.open() 方法返回的文件描述符。
+- len - 文件内容截取的长度。
+- callback - 回调函数，没有参数。
+```js
+var fs = require("fs");
+var buf = new Buffer.alloc(1024);
+
+console.log("准备打开文件！");
+fs.open('input.txt', 'r+', function(err, fd) {
+   if (err) {
+       return console.error(err);
+   }
+   console.log("文件打开成功！");
+   console.log("截取10字节内的文件内容，超出部分将被去除。");
+   
+   // 截取文件
+   fs.ftruncate(fd, 10, function(err){
+      if (err){
+         console.log(err);
+      } 
+      console.log("文件截取成功。");
+      console.log("读取相同的文件"); 
+      fs.read(fd, buf, 0, buf.length, 0, function(err, bytes){
+         if (err){
+            console.log(err);
+         }
+
+         // 仅输出读取的字节
+         if(bytes > 0){
+            console.log(buf.slice(0, bytes).toString());
+         }
+
+         // 关闭文件
+         fs.close(fd, function(err){
+            if (err){
+               console.log(err);
+            } 
+            console.log("文件关闭成功！");
+         });
+      });
+   });
+});
+```
+
+删除文件
+fs.unlink(path, callback)
+- path - 文件路径。
+- callback - 回调函数，没有参数。
+```js
+var fs = require("fs");
+
+console.log("准备删除文件！");
+fs.unlink('input.txt', function(err) {
+   if (err) {
+       return console.error(err);
+   }
+   console.log("文件删除成功！");
+});
+```
+
+创建目录
+fs.mkdir(path[, options], callback)
+- path - 文件路径。
+- options 参数可以是：
+  - recursive - 是否以递归的方式创建目录，默认为 false。
+  - mode - 设置目录权限，默认为 0777。
+- callback - 回调函数，没有参数。
+```js
+var fs = require("fs");
+// tmp 目录必须存在
+console.log("创建目录 /tmp/test/");
+fs.mkdir("/tmp/test/",function(err){
+   if (err) {
+       return console.error(err);
+   }
+   console.log("目录创建成功。");
+});
+
+fs.mkdir('/tmp/a/apple', { recursive: true }, (err) => {
+    if (err) throw err;
+});
+```
+
+读取目录
+fs.readdir(path, callback)
+- path - 文件路径。
+- callback - 回调函数，回调函数带有两个参数err, files，err 为错误信息，files 为 目录下的文件数组列表。
+```js
+var fs = require("fs");
+
+console.log("查看 /tmp 目录");
+fs.readdir("/tmp/",function(err, files){
+if (err) {
+return console.error(err);
+}
+files.forEach( function (file){
+console.log( file );
+});
+});
+```
+
+删除目录
+fs.rmdir(path, callback)
+- path - 文件路径。
+- callback - 回调函数，没有参数。
+```js
+var fs = require("fs");
+// 执行前创建一个空的 /tmp/test 目录
+console.log("准备删除目录 /tmp/test");
+fs.rmdir("/tmp/test",function(err){
+   if (err) {
+       return console.error(err);
+   }
+   console.log("读取 /tmp 目录");
+   fs.readdir("/tmp/",function(err, files){
+      if (err) {
+          return console.error(err);
+      }
+      files.forEach( function (file){
+          console.log( file );
+      });
+   });
+});
+```
+
+---
+Node.js GET/POST请求
+获取GET请求内容
+```js
+var http = require('http');
+var url = require('url');
+var util = require('util');
+ 
+http.createServer(function(req, res){
+    res.writeHead(200, {'Content-Type': 'text/plain; charset=utf-8'});
+    res.end(util.inspect(url.parse(req.url, true)));
+}).listen(3000);
+```
+获取 URL 的参数
+```js
+var http = require('http');
+var url = require('url');
+var util = require('util');
+ 
+http.createServer(function(req, res){
+    res.writeHead(200, {'Content-Type': 'text/plain'});
+ 
+    // 解析 url 参数
+    var params = url.parse(req.url, true).query;
+    res.write("网站名：" + params.name);
+    res.write("\n");
+    res.write("网站 URL：" + params.url);
+    res.end();
+ 
+}).listen(3000);
+```
+
+获取 POST 请求内容
+POST 请求的内容全部的都在请求体中，http.ServerRequest 并没有一个属性内容为请求体，原因是等待请求体传输可能是一件耗时的工作。
+比如上传文件，而很多时候我们可能并不需要理会请求体的内容，恶意的POST请求会大大消耗服务器的资源，所以 node.js 默认是不会解析请求体的，当你需要的时候，需要手动来做。
+```js
+var http = require('http');
+var querystring = require('querystring');
+var util = require('util');
+ 
+http.createServer(function(req, res){
+    // 定义了一个post变量，用于暂存请求体的信息
+    var post = '';     
+ 
+    // 通过req的data事件监听函数，每当接受到请求体的数据，就累加到post变量中
+    req.on('data', function(chunk){    
+        post += chunk;
+    });
+ 
+    // 在end事件触发后，通过querystring.parse将post解析为真正的POST请求格式，然后向客户端返回。
+    req.on('end', function(){    
+        post = querystring.parse(post);
+        res.end(util.inspect(post));
+    });
+}).listen(3000);
+```
+
+OS 模块
+提供基本的系统操作函数。
+var os = require("os")
+```js
+var os = require("os");
+
+// CPU 的字节序
+console.log('endianness : ' + os.endianness());
+
+// 操作系统名
+console.log('type : ' + os.type());
+
+// 操作系统名
+console.log('platform : ' + os.platform());
+
+// 系统内存总量
+console.log('total memory : ' + os.totalmem() + " bytes.");
+
+// 操作系统空闲内存量
+console.log('free memory : ' + os.freemem() + " bytes.");
+```
+
+Path 模块
+提供了处理和转换文件路径的工具。
+var path = require("path")
+```js
+var path = require("path");
+
+// 格式化路径
+console.log('normalization : ' + path.normalize('/test/test1//2slashes/1slash/tab/..'));
+
+// 连接路径
+console.log('joint path : ' + path.join('/test', 'test1', '2slashes/1slash', 'tab', '..'));
+
+// 转换为绝对路径
+console.log('resolve : ' + path.resolve('main.js'));
+
+// 路径中文件的后缀名
+console.log('ext name : ' + path.extname('main.js'));
+```
+
+Net 模块
+用于底层的网络通信。提供了服务端和客户端的的操作。
+var net = require("net")
+server.js
+```js
+var net = require('net');
+var server = net.createServer(function(connection) { 
+   console.log('client connected');
+   connection.on('end', function() {
+      console.log('客户端关闭连接');
+   });
+   connection.write('Hello World!\r\n');
+   connection.pipe(connection);
+});
+server.listen(8080, function() { 
+  console.log('server is listening');
+});
+```
+client.js
+```js
+var net = require('net');
+var client = net.connect({port: 8080}, function() {
+    console.log('连接到服务器！');
+});
+client.on('data', function(data) {
+    console.log(data.toString());
+    client.end();
+});
+client.on('end', function() {
+    console.log('断开与服务器的连接');
+});
+```
+
+DNS 模块
+用于解析域名。
+var dns = require("dns")
+```js
+var dns = require('dns');
+
+dns.lookup('www.github.com', function onLookup(err, address, family) {
+   console.log('ip 地址:', address);
+   dns.reverse(address, function (err, hostnames) {
+   if (err) {
+      console.log(err.stack);
+   }
+
+   console.log('反向解析 ' + address + ': ' + JSON.stringify(hostnames));
+});  
+});
+```
+
+Domain 模块
+简化异步代码的异常处理，可以捕捉处理try catch无法捕捉的。
+var domain = require("domain")
+```js
+var EventEmitter = require("events").EventEmitter;
+var domain = require("domain");
+
+var emitter1 = new EventEmitter();
+
+// 创建域
+var domain1 = domain.create();
+
+domain1.on('error', function(err){
+   console.log("domain1 处理这个错误 ("+err.message+")");
+});
+
+// 显式绑定
+domain1.add(emitter1);
+
+emitter1.on('error',function(err){
+   console.log("监听器处理此错误 ("+err.message+")");
+});
+
+emitter1.emit('error',new Error('通过监听器来处理'));
+
+emitter1.removeAllListeners('error');
+
+emitter1.emit('error',new Error('通过 domain1 处理'));
+
+var domain2 = domain.create();
+
+domain2.on('error', function(err){
+   console.log("domain2 处理这个错误 ("+err.message+")");
+});
+
+// 隐式绑定
+domain2.run(function(){
+   var emitter2 = new EventEmitter();
+   emitter2.emit('error',new Error('通过 domain2 处理'));   
+});
 
 
+domain1.remove(emitter1);
+emitter1.emit('error', new Error('转换为异常，系统将崩溃!'));
 
+```
