@@ -1691,5 +1691,351 @@ Web服务器一般指网站服务器，是指驻留于因特网上某种类型�
 大多数 web 服务器都支持服务端的脚本语言（php、python、ruby）等，并通过脚本语言从数据库获取数据，将结果返回给客户端浏览器。
 
 目前最主流的三个Web服务器是Apache、Nginx、IIS。
+![Web应用架构.png](img/20241002Web应用架构.png)
+- Client - 客户端，一般指浏览器，浏览器可以通过 HTTP 协议向服务器请求数据。
+- Server - 服务端，一般指 Web 服务器，可以接收客户端请求，并向客户端发送响应数据。
+- Business - 业务层， 通过 Web 服务器处理应用程序，如与数据库交互，逻辑运算，调用外部程序等。
+- Data - 数据层，一般由数据库组成。
+
+使用 Node 创建 Web 服务器
+
+---
+Node.js Express 框架
+Express 是一个简洁而灵活的 node.js Web应用框架, 提供了一系列强大特性帮助你创建各种 Web 应用，和丰富的 HTTP 工具。
+使用 Express 可以快速地搭建一个完整功能的网站。
+- 可以设置中间件来响应 HTTP 请求。
+- 定义了路由表用于执行不同的 HTTP 请求动作。
+- 可以通过向模板传递参数来动态渲染 HTML 页面。
+
+安装 Express
+npm install express --save
+
+- body-parser - node.js 中间件，用于处理 JSON, Raw, Text 和 URL 编码的数据。
+- cookie-parser - 这就是一个解析Cookie的工具。通过req.cookies可以取到传过来的cookie，并把它们转成对象。
+- multer - node.js 中间件，用于处理 enctype="multipart/form-data"（设置表单的MIME编码）的表单数据。
+```shell
+npm install body-parser --save
+npm install cookie-parser --save
+npm install multer --save
+```
+
+请求和响应
+Express 应用使用回调函数的参数： request 和 response 对象来处理请求和响应的数据。
+Request 对象 - request 对象表示 HTTP 请求，包含了请求查询字符串，参数，内容，HTTP 头部等属性。常见属性有：
+1. req.app：当callback为外部文件时，用req.app访问express的实例
+2. req.baseUrl：获取路由当前安装的URL路径
+3. req.body / req.cookies：获得「请求主体」/ Cookies
+4. req.fresh / req.stale：判断请求是否还「新鲜」
+5. req.hostname / req.ip：获取主机名和IP地址
+6. req.originalUrl：获取原始请求URL
+7. req.params：获取路由的parameters
+8. req.path：获取请求路径
+9. req.protocol：获取协议类型
+10. req.query：获取URL的查询参数串
+11. req.route：获取当前匹配的路由
+12. req.subdomains：获取子域名
+13. req.accepts()：检查可接受的请求的文档类型
+14. req.acceptsCharsets / req.acceptsEncodings / req.acceptsLanguages：返回指定字符集的第一个可接受字符编码
+15. req.get()：获取指定的HTTP请求头
+16. req.is()：判断请求头Content-Type的MIME类型
+
+Response 对象 - response 对象表示 HTTP 响应，即在接收到请求时向客户端发送的 HTTP 响应数据。常见属性有：
+1. res.app：同req.app一样
+2. res.append()：追加指定HTTP头
+3. res.set()在res.append()后将重置之前设置的头
+4. res.cookie(name，value [，option])：设置Cookie
+   5. opition: domain / expires / httpOnly / maxAge / path / secure / signed
+5. res.clearCookie()：清除Cookie
+6. res.download()：传送指定路径的文件
+7. res.get()：返回指定的HTTP头
+8. res.json()：传送JSON响应
+9. res.jsonp()：传送JSONP响应
+10. res.location()：只设置响应的Location HTTP头，不设置状态码或者close response
+11. res.redirect()：设置响应的Location HTTP头，并且设置状态码302
+12. res.render(view,[locals],callback)：渲染一个view，同时向callback传递渲染后的字符串，如果在渲染过程中有错误发生next(err)将会被自动调用。callback将会被传入一个可能发生的错误以及渲染后的页面，这样就不会自动输出了。
+13. res.send()：传送HTTP响应
+14. res.sendFile(path [，options] [，fn])：传送指定路径的文件 -会自动根据文件extension设定Content-Type
+15. res.set()：设置HTTP头，传入object可以一次设置多个头
+16. res.status()：设置HTTP状态码
+17. res.type()：设置Content-Type的MIME类型
+```js
+var express = require('express');
+var app = express();
+ 
+//  主页输出 "Hello World"
+app.get('/', function (req, res) {
+   console.log("主页 GET 请求");
+   res.send('Hello GET');
+})
+ 
+ 
+//  POST 请求
+app.post('/', function (req, res) {
+   console.log("主页 POST 请求");
+   res.send('Hello POST');
+})
+ 
+//  /del_user 页面响应
+app.get('/del_user', function (req, res) {
+   console.log("/del_user 响应 DELETE 请求");
+   res.send('删除页面');
+})
+ 
+//  /list_user 页面 GET 请求
+app.get('/list_user', function (req, res) {
+   console.log("/list_user GET 请求");
+   res.send('用户列表页面');
+})
+ 
+// 对页面 abcd, abxcd, ab123cd, 等响应 GET 请求
+app.get('/ab*cd', function(req, res) {   
+   console.log("/ab*cd GET 请求");
+   res.send('正则匹配');
+})
+ 
+ 
+var server = app.listen(8081, function () {
+ 
+  var host = server.address().address
+  var port = server.address().port
+ 
+  console.log("应用实例，访问地址为 http://%s:%s", host, port)
+ 
+})
+```
+
+静态文件
+Express 提供了内置的中间件 express.static 来设置静态文件如：图片， CSS, JavaScript 等。
+
+你可以使用 express.static 中间件来设置静态文件路径。
+app.use('/public', express.static('public'));
+```js
+var express = require('express');
+var app = express();
+ 
+app.use('/public', express.static('public'));
+ 
+app.get('/', function (req, res) {
+   res.send('Hello World');
+})
+ 
+var server = app.listen(8081, function () {
+ 
+  var host = server.address().address
+  var port = server.address().port
+ 
+  console.log("应用实例，访问地址为 http://%s:%s", host, port)
+ 
+})
+```
+
+---
+Node.js RESTful API
+什么是 REST？
+REST即表述性状态传递（英文：Representational State Transfer，简称REST）是Roy Fielding博士在2000年他的博士论文中提出来的一种软件架构风格。
+
+表述性状态转移是一组架构约束条件和原则。满足这些约束条件和原则的应用程序或设计就是RESTful。需要注意的是，REST是设计风格而不是标准。REST通常基于使用HTTP，URI，和XML（标准通用标记语言下的一个子集）以及HTML（标准通用标记语言下的一个应用）这些现有的广泛流行的协议和标准。REST 通常使用 JSON 数据格式。
+
+HTTP 方法
+以下为 REST 基本架构的四个方法：
+- GET - 用于获取数据。
+- PUT - 用于更新或添加数据。
+- DELETE - 用于删除数据。
+- POST - 用于添加数据。
+
+RESTful Web Services
+Web service是一个平台独立的，低耦合的，自包含的、基于可编程的web的应用程序，可使用开放的XML（标准通用标记语言下的一个子集）标准来描述、发布、发现、协调和配置这些应用程序，用于开发分布式的互操作的应用程序。
+
+基于 REST 架构的 Web Services 即是 RESTful。
+
+由于轻量级以及通过 HTTP 直接传输数据的特性，Web 服务的 RESTful 方法已经成为最常见的替代方法。可以使用各种语言（比如 Java 程序、Perl、Ruby、Python、PHP 和 Javascript[包括 Ajax]）实现客户端。
+
+RESTful Web 服务通常可以通过自动客户端或代表用户的应用程序访问。但是，这种服务的简便性让用户能够与之直接交互，使用它们的 Web 浏览器构建一个 GET URL 并读取返回的内容。
+https://www.runoob.com/w3cnote/restful-architecture.html
+
+```js
+var express = require('express');
+var app = express();
+var fs = require("fs");
+
+app.get('/:id', function (req, res) {
+   // 首先我们读取已存在的用户
+   fs.readFile( __dirname + "/" + "users.json", 'utf8', function (err, data) {
+       data = JSON.parse( data );
+       var user = data["user" + req.params.id] 
+       console.log( user );
+       res.end( JSON.stringify(user));
+   });
+})
+
+var server = app.listen(8081, function () {
+
+  var host = server.address().address
+  var port = server.address().port
+  console.log("应用实例，访问地址为 http://%s:%s", host, port)
+
+})
+```
+
+---
+Node.js 多进程
+我们都知道 Node.js 是以单线程的模式运行的，但它使用的是事件驱动来处理并发，这样有助于我们在多核 cpu 的系统上创建多个子进程，从而提高性能。
+
+每个子进程总是带有三个流对象：child.stdin, child.stdout 和child.stderr。他们可能会共享父进程的 stdio 流，或者也可以是独立的被导流的流对象。
+- exec - child_process.exec 使用子进程执行命令，缓存子进程的输出，并将子进程的输出以回调函数参数的形式返回。
+- spawn - child_process.spawn 使用指定的命令行参数创建新进程。
+- fork - child_process.fork 是 spawn()的特殊形式，用于在子进程中运行的模块，如 fork('./son.js') 相当于 spawn('node', ['./son.js']) 。与spawn方法不同的是，fork会在父进程与子进程之间，建立一个通信管道，用于进程之间的通信。
+
+exec() 方法
+child_process.exec 使用子进程执行命令，缓存子进程的输出，并将子进程的输出以回调函数参数的形式返回。
+child_process.exec(command[, options], callback)
+- command： 字符串， 将要运行的命令，参数使用空格隔开
+- options ：对象
+  - cwd ，字符串，子进程的当前工作目录
+  - env，对象 环境变量键值对
+  - encoding ，字符串，字符编码（默认： 'utf8'）
+  - shell ，字符串，将要执行命令的 Shell（默认: 在 UNIX 中为/bin/sh， 在 Windows 中为cmd.exe， Shell 应当能识别 -c开关在 UNIX 中，或 /s /c 在 Windows 中。 在Windows 中，命令行解析应当能兼容cmd.exe）
+  - timeout，数字，超时时间（默认： 0）
+  - maxBuffer，数字， 在 stdout 或 stderr 中允许存在的最大缓冲（二进制），如果超出那么子进程将会被杀死 （默认: 200*1024）
+  - killSignal ，字符串，结束信号（默认：'SIGTERM'）
+  - uid，数字，设置用户进程的 ID
+  - gid，数字，设置进程组的 ID
+- callback ：回调函数，包含三个参数error, stdout 和 stderr。
+
+exec() 方法返回最大的缓冲区，并等待进程结束，一次性返回缓冲区的内容。
+
+support.js
+```js
+console.log("进程 " + process.argv[2] + " 执行。" );
+```
+
+master.js
+```js
+const fs = require('fs');
+const child_process = require('child_process');
+ 
+for(var i=0; i<3; i++) {
+    var workerProcess = child_process.exec('node support.js '+i, function (error, stdout, stderr) {
+        if (error) {
+            console.log(error.stack);
+            console.log('Error code: '+error.code);
+            console.log('Signal received: '+error.signal);
+        }
+        console.log('stdout: ' + stdout);
+        console.log('stderr: ' + stderr);
+    });
+ 
+    workerProcess.on('exit', function (code) {
+        console.log('子进程已退出，退出码 '+code);
+    });
+}
+```
+
+spawn() 方法
+child_process.spawn 使用指定的命令行参数创建新进程
+child_process.spawn(command[, args][, options])
+- command： 将要运行的命令
+- args： Array 字符串参数数组
+- options Object
+  - cwd String 子进程的当前工作目录
+  - env Object 环境变量键值对
+  - stdio Array|String 子进程的 stdio 配置
+  - detached Boolean 这个子进程将会变成进程组的领导
+  - uid Number 设置用户进程的 ID
+  - gid Number 设置进程组的 ID
+
+spawn() 方法返回流 (stdout & stderr)，在进程返回大量数据时使用。进程一旦开始执行时 spawn() 就开始接收响应。
+support.js
+```js
+console.log("进程 " + process.argv[2] + " 执行。" );
+```
+
+master.js
+```js
+const fs = require('fs');
+const child_process = require('child_process');
+ 
+for(var i=0; i<3; i++) {
+   var workerProcess = child_process.spawn('node', ['support.js', i]);
+ 
+   workerProcess.stdout.on('data', function (data) {
+      console.log('stdout: ' + data);
+   });
+ 
+   workerProcess.stderr.on('data', function (data) {
+      console.log('stderr: ' + data);
+   });
+ 
+   workerProcess.on('close', function (code) {
+      console.log('子进程已退出，退出码 '+code);
+   });
+}
+```
+
+fork 方法
+child_process.fork 是 spawn() 方法的特殊形式，用于创建进程
+child_process.fork(modulePath[, args][, options])
+- modulePath： String，将要在子进程中运行的模块
+- args： Array 字符串参数数组
+- options：Object
+  - cwd String 子进程的当前工作目录
+  - env Object 环境变量键值对
+  - execPath String 创建子进程的可执行文件
+  - execArgv Array 子进程的可执行文件的字符串参数数组（默认： process.execArgv）
+  - silent Boolean 如果为true，子进程的stdin，stdout和stderr将会被关联至父进程，否则，它们将会从父进程中继承。（默认为：false）
+  - uid Number 设置用户进程的 ID
+  - gid Number 设置进程组的 ID
+
+support.js
+```js
+console.log("进程 " + process.argv[2] + " 执行。" );
+```
+
+master.js
+```js
+const fs = require('fs');
+const child_process = require('child_process');
+ 
+for(var i=0; i<3; i++) {
+   var worker_process = child_process.fork("support.js", [i]);    
+ 
+   worker_process.on('close', function (code) {
+      console.log('子进程已退出，退出码 ' + code);
+   });
+}
+```
+
+---
+Node.js JXcore 打包
+Node.js 是一个开放源代码、跨平台的、用于服务器端和网络应用的运行环境。
+JXcore 是一个支持多线程的 Node.js 发行版本，基本不需要对你现有的代码做任何改动就可以直接线程安全地以多线程运行。
+
+Xcore 安装
+下载 JXcore 安装包，并解压，在解压的的目录下提供了 jx 二进制文件命令
+
+步骤1、下载
+下载 JXcore 安装包 https://github.com/jxcore/jxcore-release
+1. Window 平台下载：Download(Windows x64 (V8))。
+2. Linux/OSX 安装命令：
+curl https://raw.githubusercontent.com/jxcore/jxcore/master/tools/jx_install.sh | bash
+
+包代码
+使用 jx 命令打包以上项目，并指定 index.js 为 Node.js 项目的主文件
+jx package index.js index
+以上命令执行成功，会生成以下两个文件：
+- index.jxp 这是一个中间件文件，包含了需要编译的完整项目信息。
+- index.jx 这是一个完整包信息的二进制文件，可运行在客户端上。
+
+载入 JX 文件
+node index.js command_line_arguments
+jx index.jx command_line_arguments
+
+---
+Node.js 连接 MySQL
+npm install mysql
 
 
+---
+Node.js 连接 MongoDB
+MongoDB是一种文档导向数据库管理系统，由C++撰写而成。
+npm install mongodb

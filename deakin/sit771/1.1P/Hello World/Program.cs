@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using SplashKitSDK;
 
 namespace Hello_World
