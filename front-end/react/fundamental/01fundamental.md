@@ -265,3 +265,5 @@ function MyButton({ count, onClick }) {
   );
 }
 ```
+
+React 组件必须返回单个 JSX 元素，不能像两个按钮那样返回多个相邻的 JSX 元素。要解决此问题，可以使用 Fragment（<> 与 </>）包裹多个相邻的 JSX 元素
