@@ -1,0 +1,3 @@
+Amazon Aurora (Aurora)是一个与 MySQL和 PostgreSQL 兼容的完全托管的关系数据库引擎。您已了解了 MySQ!和 PostgresQL不仅具有高端商用数据库的速度和可靠性，同时还具有开源数据库的简单性和成本效益。您目前用于现有 MySQL和 PostgresQL数据库的代码、工具和应用程序可用于 Aurora。在某些工作负载条件下，Aurora 最多可以将 MySQL吞吐量增加5倍，将 PostgreSQL的吞吐量增加了倍，而无需对大多数现有应用程序进行更改。
+Aurora 包括一个高性能的存储子系统。已自定义其 MVSQL和 PostgreSQL 兼容数据库引擎以利用该快速分布式存储。基础存储会根据需要自动增长。Aurora 集群卷可增大到最大大小 128 tebibytes(TiB)。Aurora 还会自动执行和标准化数据库集群和复制，这通常是数据库配置和管理方面的最大问题。
+Aurora 是托管式数据库服务 Amazon Relational DatabaseService(Amazon RDS)的一部分。Amazon RDS 是项 Web 服务，让用户能够在云中更轻松地设置、操作和扩展关系数据库。如果您还不熟悉 Amazon RDS，请参阅Amazon Relational Database Service 用户指南。

@@ -1,0 +1,1 @@
+AWS CloudFormation 是一项服务，可帮助您对 AWS 资源进行建模和设置，以便能花较少的时间管理这些资源，而将更多的时间花在运行于AWS 中的应用程序上。您创建一个描述您所需的所有 AWS 资源(如Amazon EC2 实例或 Amazon RDS 数据库实例)的模板，并且CloudFormation 将负责为您设置和配置这些资源。您无需单独创建和配置 AWS 资源并了解 what; CloudFormation 句柄处理该工作时所依赖的内容。以下方案演示 CloudFormation 如何提供帮助。
