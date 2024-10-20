@@ -743,15 +743,15 @@ HTTP 2.0 最大的改进有两点，一是支持服务端推送，二是支持 T
 TCP 连接复用，则使用同一个 TCP 连接来传输多个 HTTP 请求，避免了 TCP 连接建立时的三次握手开销，和初建 TCP 连接时传输窗口小的问题。
 
 ## Dom tree 构建过程
-![domTree.png](20241015domTree.png)
+![domTree.png](img/20241015domTree.png)
 
 ### 解析代码
 常开发需要的 90% 的“词”（指编译原理的术语 token，表示最小的有意义的单元），种类大约只有标签开始、属性、标签结束、注释、CDATA 节点几种。
 #### 词（token）是如何被拆分的
-![tagParser.png](20241015tagParser.png)
+![tagParser.png](img/20241015tagParser.png)
 
 #### 状态机
-![stateMachine.png](20241015stateMachine.png)
+![stateMachine.png](img/20241015stateMachine.png)
 
 https://html.spec.whatwg.org/multipage/parsing.html#tokenization
 
@@ -927,6 +927,13 @@ application-name：如果页面是 Web application，用这个标签表示应用
 - keywords: 页面关键字，对于 SEO 场景非常关键。
 - referrer: 跳转策略，是一种安全考量。
 - theme-color: 页面风格颜色，实际并不会影响页面，但是浏览器可能据此调整页面之外的 UI（如窗口边框或者 tab 的颜色）。
+
+## 宏观和微观任务
+采纳 JSC 引擎的术语，我们把宿主发起的任务称为宏观任务，把 JavaScript 引擎发起的任务称为微观任务
+
+
+
+
 
 
 
