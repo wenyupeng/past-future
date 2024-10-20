@@ -826,19 +826,107 @@ div>.cls {
 ### 直接后继选择器“ +”
 ### 列选择器“ || ”
 
+## 排版
+浏览器又可以支持元素和文字的混排，元素被定义为占据长方形的区域，还允许边框、边距和留白，这个就是所谓的盒模型。
+
+在正常流的基础上，浏览器还支持两类元素：绝对定位元素和浮动元素。
+- 绝对定位元素把自身从正常流抽出，直接由 top 和 left 等属性确定自身的位置，不参加排版计算，也不影响其它元素。绝对定位元素由 position 属性控制。
+- 浮动元素则是使得自己在正常流的位置向左或者向右移动到边界，并且占据一块排版空间。浮动元素由 float 属性控制。
+
+除了正常流，浏览器还支持其它排版方式，比如现在非常常用的 flex 排版，这些排版方式由外部元素的 display 属性来控制（注意，display 同时还控制元素在正常流中属于 inline 等级还是 block 等级）。
+
+### 正常流文字排版
+正常流是唯一一个文字和盒混排的排版方式
+
+在正常流的文字排版中，多数元素被当作长方形盒来排版，而只有 display 为 inline 的元素，是被拆成文本来排版的（还有一种 run-in 元素，它有时作为盒，有时作为文字，不太常用，这里不详细讲了）。
+
+display 值为 inline 的元素中的文字排版时会被直接排入文字流中，inline 元素主轴方向的 margin 属性和 border 属性（例如主轴为横向时的 margin-left 和 margin-right）也会被计算进排版前进距离当中。
+
+### 正常流中的盒
+在正常流中，display 不为 inline 的元素或者伪元素，会以盒的形式跟文字一起排版。多数 display 属性都可以分成两部分：内部的排版和是否 inline，带有 inline- 前缀的盒，被称作行内级盒。
+
+根据盒模型，一个盒具有 margin、border、padding、width/height 等属性，它在主轴方向占据的空间是由对应方向的这几个属性之和决定的，而 vertical-align 属性决定了盒在交叉轴方向的位置，同时也会影响实际行高。
+
+所以，浏览器对行的排版，一般是先行内布局，再确定行的位置，根据行的位置计算出行内盒和文字的排版位置。 块级盒比较简单，它总是单独占据一整行，计算出交叉轴方向的高度即可。
+
+### 绝对定位元素
+position 属性为 absolute 的元素，我们需要根据它的包含块来确定位置，这是完全跟正常流无关的一种独立排版模式，逐层找到其父级的 position 非 static 元素即可。
+### 浮动元素排版
+float 元素非常特别，浏览器对 float 的处理是先排入正常流，再移动到排版宽度的最左 / 最右（这里实际上是主轴的最前和最后）。移动之后，float 元素占据了一块排版的空间，因此，在数行之内，主轴方向的排版距离发生了变化，直到交叉轴方向的尺寸超过了浮动元素的交叉轴尺寸范围，主轴排版尺寸才会恢复。
+float 元素排布完成后，float 元素所在的行需要重新确定位置。
+
+### 其它的排版
+CSS 的每一种排版都有一个很复杂的规定，实际实现形式也各不相同。比如如 flex 排版，支持了 flex 属性，flex 属性将每一行排版后的剩余空间平均分配给主轴方向的 width/height 属性。浏览器支持的每一种排版方式，都是按照对应的标准来实现的。
+
+## head 标签
+所谓元信息，是指描述自身的信息，元信息类标签，就是 HTML 用于描述文档自身的一类标签，它们通常出现在 head 标签中，一般都不会在页面被显示出来（与此相对，其它标签，如语义类标签，描述的是业务）
+
+元信息多数情况下是给浏览器、搜索引擎等机器阅读的，有时候这些信息会在页面之外显示给用户，有时候则不会。
+
+head 标签本身并不携带任何信息，它主要是作为盛放其它语义类标签的容器使用
+
+head 标签规定了自身必须是 html 标签中的第一个标签，它的内容必须包含一个 title，并且最多只能包含一个 base。如果文档作为 iframe，或者有其他方式指定了文档标题时，可以允许不包含 title 标签。
+
+### title 标签
+title 标签表示文档的标题
 
 
+### base 标签
+base 标签实际上是个历史遗留标签。它的作用是给页面上所有的 URL 相对地址提供一个基础。
 
+base 标签最多只有一个，它改变全局的链接地址，它是一个非常危险的标签，容易造成跟 JavaScript 的配合问题，所以在实际开发中，我比较建议你使用 JavaScript 来代替 base 标签。
 
+### meta 标签
+meta 标签是一组键值对，它是一种通用的元信息表示标签。
 
+在 head 中可以出现任意多个 meta 标签。一般的 meta 标签由 name 和 content 两个属性来定义。name 表示元信息的名，content 则用于表示元信息的值。
+```html
+<meta name=application-name content="lsForums">
+```
 
+### 具有 charset 属性的 meta
+```html
+<meta charset="UTF-8" >
+```
 
+### 具有 http-equiv 属性的 meta
+具有 http-equiv 属性的 meta 标签，表示执行一个命令，这样的 meta 标签可以不需要 name 属性了。
+```html
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+/* 相当于添加了 content-type 这个 http 头，并且指定了 http 编码方式。*/
+```
+除了 content-type，还有以下几种命令：
+- content-language 指定内容的语言；
+- default-style 指定默认样式表；
+- refresh 刷新；
+- set-cookie 模拟 http 头 set-cookie，设置 cookie；
+- x-ua-compatible 模拟 http 头 x-ua-compatible，声明 ua 兼容性；
+- content-security-policy 模拟 http 头 content-security-policy，声明内容安全策略。
 
+### name 为 viewport 的 meta
+```html
+<meta name="viewport" content="width=500, initial-scale=1">
+// 指定了两个属性，宽度和缩放
+```
+- width：页面宽度，可以取值具体的数字，也可以是 device-width，表示跟设备宽度相等。
+- height：页面高度，可以取值具体的数字，也可以是 device-height，表示跟设备高度相等。
+- initial-scale：初始缩放比例。
+- minimum-scale：最小缩放比例。
+- maximum-scale：最大缩放比例。
+- user-scalable：是否允许用户缩放。
+```html
+<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+// 对于已经做好了移动端适配的网页，应该把用户缩放功能禁止掉，宽度设为设备宽度，一个标准的 meta 
+```
 
-
-
-
-
+### 其它预定义的 meta
+application-name：如果页面是 Web application，用这个标签表示应用名称
+- author: 页面作者。
+- description：页面描述，这个属性可能被用于搜索引擎或者其它场合。
+- generator: 生成页面所使用的工具，主要用于可视化编辑器，如果是手写 HTML 的网页，不需要加这个 meta。
+- keywords: 页面关键字，对于 SEO 场景非常关键。
+- referrer: 跳转策略，是一种安全考量。
+- theme-color: 页面风格颜色，实际并不会影响页面，但是浏览器可能据此调整页面之外的 UI（如窗口边框或者 tab 的颜色）。
 
 
 
