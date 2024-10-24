@@ -931,13 +931,438 @@ application-name：如果页面是 Web application，用这个标签表示应用
 ## 宏观和微观任务
 采纳 JSC 引擎的术语，我们把宿主发起的任务称为宏观任务，把 JavaScript 引擎发起的任务称为微观任务
 
+一个 JavaScript 引擎会常驻于内存中，它等待着我们（宿主）把 JavaScript 代码或者函数传递给它执行
 
+在 ES3 和更早的版本中，JavaScript 本身还没有异步执行代码的能力，这也就意味着，宿主环境传递给 JavaScript 引擎一段代码，引擎就把代码直接顺次执行了，这个任务也就是宿主发起的任务。
 
+在 ES5 之后，JavaScript 引入了 Promise，这样，不需要浏览器的安排，JavaScript 引擎本身也可以发起任务了。
 
+JavaScript 引擎等待宿主环境分配宏观任务，在操作系统中，通常等待的行为都是一个事件循环，所以在 Node 术语中，也会把这个部分称为事件循环。
 
+Promise 永远在队列尾部添加微观任务。setTimeout 等宿主 API，则会添加宏观任务。
 
+```js
+function sleep(duration) {
+    return new Promise(function(resolve, reject) {
+        setTimeout(resolve,duration);
+    })
+}
+sleep(1000).then( ()=> console.log("finished"));
+```
 
+```js
+var r = new Promise(function(resolve, reject){
+    console.log("a");
+    resolve()
+});
+r.then(() => console.log("c"));
+console.log("b")
+```
+执行这段代码后，注意输出的顺序是 a b c。在进入 console.log(“b”) 之前，毫无疑问 r 已经得到了 resolve，但是 Promise 的 resolve 始终是异步操作，所以 c 无法出现在 b 之前。
 
+```js
+var r = new Promise(function(resolve, reject){
+    console.log("a");
+    resolve()
+});
+setTimeout(()=>console.log("d"), 0)
+r.then(() => console.log("c"));
+console.log("b")
+```
+不论代码顺序如何，d 必定发生在 c 之后，因为 Promise 产生的是 JavaScript 引擎内部的微任务，而 setTimeout 是浏览器 API，它产生宏任务。
 
+```js
+setTimeout(()=>console.log("d"), 0)
+var r = new Promise(function(resolve, reject){
+    resolve()
+});
+r.then(() => { 
+    var begin = Date.now();
+    while(Date.now() - begin < 1000);
+    console.log("c1") 
+    new Promise(function(resolve, reject){
+        resolve()
+    }).then(() => console.log("c2"))
+});
+```
+即使耗时一秒的 c1 执行完毕，再 enque 的 c2，仍然先于 d 执行了，这很好地解释了微任务优先的原理。
 
+如何分析异步执行的顺序：
+- 首先我们分析有多少个宏任务；
+- 在每个宏任务中，分析有多少个微任务；
+- 根据调用次序，确定宏任务中的微任务执行次序；
+- 根据宏任务的触发规则和调用次序，确定宏任务的执行次序；
+- 确定整个顺序。
+```js
+function sleep(duration) {
+    return new Promise(function(resolve, reject) {
+        console.log("b");
+        setTimeout(resolve,duration);
+    })
+}
+console.log("a");
+sleep(5000).then(()=>console.log("c"));
+```
+Promise 是 JavaScript 中的一个定义，但是实际编写代码时，我们可以发现，它似乎并不比回调的方式书写更简单，但是从 ES6 开始，我们有了 async/await，这个语法改进跟 Promise 配合，能够有效地改善代码结构。
+
+### 新特性：async/await
+async/await 是 ES2016 新加入的特性，它提供了用 for、if 等代码结构来编写异步的方式。它的运行时基础是 Promise
+
+async 函数必定返回 Promise，所有返回 Promise 的函数都可以认为是异步函数。
+
+async 函数是一种特殊语法，特征是在 function 关键字之前加上 async 关键字，这样，就定义了一个 async 函数，
+```js
+function sleep(duration) {
+    return new Promise(function(resolve, reject) {
+        setTimeout(resolve,duration);
+    })
+}
+async function foo(){
+    console.log("a")
+    await sleep(2000)
+    console.log("b")
+}
+```
+
+async 函数强大之处在于，它是可以嵌套的。我们在定义了一批原子操作的情况下，可以利用 async 函数组合出新的 async 函数
+```js
+function sleep(duration) {
+    return new Promise(function(resolve, reject) {
+        setTimeout(resolve,duration);
+    })
+}
+async function foo(name){
+    await sleep(2000)
+    console.log(name)
+}
+async function foo2(){
+    await foo("a");
+    await foo("b");
+}
+```
+
+## 闭包相关
+![package.png](img/20241021package.png)
+
+### 闭包 closure
+闭包其实只是一个绑定了执行环境的函数
+
+闭包包含两个部分
+- 环境部分
+  - 环境
+  - 标识符列表
+- 表达式部分
+
+### 执行上下文：执行的基础设施
+执行上下文在 ES3 中，包含三个部分。
+- scope：作用域，也常常被叫做作用域链。
+- variable object：变量对象，用于存储变量的对象。
+- this value：this 值。
+在 ES5 中
+- lexical environment：词法环境，当获取变量时使用。
+- variable environment：变量环境，当声明变量时使用。
+- this value：this 值。
+在 ES2018 中，执行上下文又变成了这个样子，this 值被归入 lexical environment
+- lexical environment：词法环境，当获取变量或者 this 值时使用。
+- variable environment：变量环境，当声明变量时使用
+- code evaluation state：用于恢复代码执行位置。
+- Function：执行的任务是函数时使用，表示正在被执行的函数。
+- ScriptOrModule：执行的任务是脚本或者模块时使用，表示正在被执行的代码。
+- Realm：使用的基础库和内置对象实例。
+- Generator：仅生成器上下文有这个属性，表示当前生成器。
+
+### var 声明与赋值
+var 声明作用域函数执行的作用域。也就是说，var 会穿透 for 、if 等语句。
+
+在只有 var，没有 let 的旧 JavaScript 时代，诞生了一个技巧，叫做：立即执行的函数表达式（IIFE），通过创建一个函数，并且立即执行，来构造一个新的域，从而控制 var 的范围。
+
+```js
+var b;
+void function(){
+    var env = {b:1};
+    b = 2;
+    console.log("In function b:", b);
+    with(env) {
+        var b = 3;
+        console.log("In with b:", b);
+    }
+}();
+console.log("Global b:", b);
+```
+
+### let
+let 是 ES6 开始引入的新的变量声明模式，比起 var 的诸多弊病，let 做了非常明确的梳理和规定。
+
+为了实现 let，JavaScript 在运行时引入了块级作用域。也就是说，在 let 出现之前，JavaScript 的 if for 等语句皆不产生作用域。
+
+以下语句会产生 let 使用的作用域：
+- for；
+- if；
+- switch；
+- try/catch/finally。
+
+### iframe
+```js
+var iframe = document.createElement('iframe')
+document.documentElement.appendChild(iframe)
+iframe.src="javascript:var b = {};"
+ 
+var b1 = iframe.contentWindow.b;
+var b2 = {};
+ 
+console.log(typeof b1, typeof b2); //object object
+ 
+console.log(b1 instanceof Object, b2 instanceof Object); //false true
+```
+
+## 函数
+第一种，普通函数：用 function 关键字定义的函数。
+```js
+function foo(){
+    // code
+}
+```
+第二种，箭头函数：用 => 运算符定义的函数。
+```js
+const foo = () => {
+    // code
+}
+```
+第三种，方法：在 class 中定义的函数。
+```js
+class C {
+    foo(){
+        //code
+    }
+}
+```
+第四种，生成器函数：用 function * 定义的函数。
+```js
+function* foo(){
+    // code
+}
+```
+第五种，类：用 class 定义的类，实际上也是函数。
+```js
+class Foo {
+    constructor(){
+        //code
+    }
+}
+```
+第六 / 七 / 八种，异步函数：普通函数、箭头函数和生成器函数加上 async 关键字。
+```js
+async function foo(){
+    // code
+}
+const foo = async () => {
+    // code
+}
+
+async function foo*(){
+    // code
+}
+```
+## this 关键字的行为
+this 是 JavaScript 中的一个关键字，它的使用方法类似于一个变量（但是 this 跟变量的行为有很多不同
+
+this 是执行上下文中很重要的一个组成部分。同一个函数调用方式不同，得到的 this 值也不同
+```js
+function showThis(){
+    console.log(this);
+}
+ 
+var o = {
+    showThis: showThis
+}
+ 
+showThis(); // global
+o.showThis(); // o
+```
+我们定义了函数 showThis，我们把它赋值给一个对象 o 的属性，然后尝试分别使用两个引用来调用同一个函数，结果得到了不同的 this 值。
+
+普通函数的 this 值由“调用它所使用的引用”决定，其中奥秘就在于：我们获取函数的表达式，它实际上返回的并非函数本身，而是一个 Reference 类型
+
+Reference 类型由两部分组成：一个对象和一个属性值。不难理解 o.showThis 产生的 Reference 类型，即由对象 o 和属性“showThis”构成。
+
+> 调用函数时使用的引用，决定了函数执行时刻的 this 值。
+
+```js
+const showThis = () => {
+    console.log(this);
+}
+ 
+var o = {
+    showThis: showThis
+}
+ 
+showThis(); // global
+o.showThis(); // global
+```
+
+```js
+class C {
+    showThis() {
+        console.log(this);
+    }
+}
+var o = new C();
+var showThis = o.showThis;
+ 
+showThis(); // undefined
+o.showThis(); // o
+```
+生成器函数、异步生成器函数和异步普通函数跟普通函数行为是一致的，异步箭头函数与箭头函数行为是一致的
+
+### this 关键字的机制
+函数能够引用定义时的变量，如上文分析，函数也能记住定义时的 this，因此，函数内部必定有一个机制来保存这些信息。
+
+在 JavaScript 标准中，为函数规定了用来保存定义时上下文的私有属性 [[Environment]]。
+
+当一个函数执行时，会创建一条新的执行环境记录，记录的外层词法环境（outer lexical environment）会被设置成函数的 [[Environment]]。
+```js
+var a = 1;
+foo();
+ 
+//在别处定义了 foo：
+ 
+var b = 2;
+function foo(){
+    console.log(b); // 2
+    console.log(a); // error
+}
+```
+
+![stack.png](img/20241021stack.png)
+当函数调用时，会入栈一个新的执行上下文，函数调用结束时，执行上下文被出栈。
+
+而 this 则是一个更为复杂的机制，JavaScript 标准定义了 [[thisMode]] 私有属性。
+
+[[thisMode]] 私有属性有三个取值。
+- lexical：表示从上下文中找 this，这对应了箭头函数。
+- global：表示当 this 为 undefined 时，取全局对象，对应了普通函数。
+- strict：当严格模式时使用，this 严格按照调用时传入的值，可能为 null 或者 undefined。
+```js
+"use strict"
+function showThis(){
+    console.log(this);
+}
+ 
+var o = {
+    showThis: showThis
+}
+ 
+showThis(); // undefined
+o.showThis(); // o
+```
+函数创建新的执行上下文中的词法环境记录时，会根据 [[thisMode]] 来标记新纪录的 [[ThisBindingStatus]] 私有属性。
+
+```js
+var o = {}
+o.foo = function foo(){
+    console.log(this);
+    return () => {
+        console.log(this);
+        return () => console.log(this);
+    }
+}
+ 
+o.foo()()(); // o, o, o
+```
+定义了三层嵌套的函数，最外层为普通函数，两层都是箭头函数。  
+这里调用三个函数，获得的 this 值是一致的，都是对象 o。
+
+### 操作 this 的内置函数
+Function.prototype.call 和 Function.prototype.apply 可以指定函数调用时传入的 this 值
+```js
+function foo(a, b, c){
+    console.log(this);
+    console.log(a, b, c);
+}
+foo.call({}, 1, 2, 3);
+foo.apply({}, [1, 2, 3]);
+```
+```js
+function foo(a, b, c){
+    console.log(this);
+    console.log(a, b, c);
+}
+foo.bind({}, 1, 2, 3)();
+```
+call、bind 和 apply 用于不接受 this 的函数类型如箭头、class 都不会报错。
+
+对象部分已经讲过 new 的执行过程
+- 以构造器的 prototype 属性（注意与私有字段 [[prototype]] 的区分）为原型，创建新对象；
+- 将 this 和调用参数传给构造器，执行；
+- 如果构造器返回的是对象，则返回，否则返回第一步创建的对象。
+![class.png](img/20241021class.png)
+
+## Completion 类型
+Completion Record 用于描述异常、跳出等语句执行过程
+
+Completion Record 表示一个语句执行完之后的结果，它有三个字段：
+- [[type]] 表示完成的类型，有 break continue return throw 和 normal 几种类型；
+- [[value]] 表示语句的返回值，如果语句没有，则是 empty；
+- [[target]] 表示语句的目标，通常是一个 JavaScript 标签（标签在后文会有介绍）。
+
+![language.png](img/20241022language.png)
+
+## 普通的语句
+- 声明类语句
+  - var 声明
+  - const 声明
+  - let 声明
+  - 函数声明
+  - 类声明
+- 表达式语句
+- 空语句
+- debugger 语句
+
+普通语句执行后，会得到 [[type]] 为 normal 的 Completion Record，JavaScript 引擎遇到这样的 Completion Record，会继续执行下一条语句。
+
+这些语句中，只有表达式语句会产生 [[value]]，当然，从引擎控制的角度，这个 value 并没有什么用处。
+
+如果你经常使用 chrome 自带的调试工具，可以知道，输入一个表达式，在控制台可以得到结果，但是在前面加上 var，就变成了 undefined。
+
+## 语句块
+语句块就是拿大括号括起来的一组语句，它是一种语句的复合结构，可以嵌套。
+```js
+{
+  var i = 1; // normal, empty, empty
+  i ++; // normal, 1, empty
+  console.log(i) //normal, undefined, empty
+} // normal, undefined, empty
+```
+在每一行的注释中，给出了语句的 Completion Record。在一个 block 中，如果每一个语句都是 normal 类型，那么它会顺次执行
+```js
+{
+  var i = 1; // normal, empty, empty
+  return i; // return, 1, empty
+  i ++; 
+  console.log(i)
+} // return, 1, empty
+```
+在 block 中插入了一条 return 语句，产生了一个非 normal 记录，那么整个 block 会成为非 normal。这个结构就保证了非 normal 的完成类型可以穿透复杂的语句嵌套结构，产生控制效果。
+
+## 控制型语句
+控制型语句带有 if、switch 关键字，它们会对不同类型的 Completion Record 产生反应。
+
+控制类语句分成两部分，一类是对其内部造成影响，如 if、switch、while/for、try。另一类是对外部造成影响如 break、continue、return、throw，这两类语句的配合，会产生控制代码执行顺序和执行逻辑的效果。
+![control.png](img/20241022control.png)
+
+## 带标签的语句
+任何 JavaScript 语句是可以加标签的，在语句前加冒号即可
+```js
+firstStatement: var i = 1;
+```
+大部分时候，这个东西类似于注释，没有任何用处。唯一有作用的时候是：与完成记录类型中的 target 相配合，用于跳出多层循环。
+```js
+outer: while(true) {
+  inner: while(true) {
+      break outer;
+  }
+}
+console.log("finished")
+```
+break/continue 语句如果后跟了关键字，会产生带 target 的完成记录。一旦完成记录带了 target，那么只有拥有对应 label 的循环语句会消费它。
 
